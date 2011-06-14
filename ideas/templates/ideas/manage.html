@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
+        </style>	
+        
+        <style>
+			#tabsu { height: 200px; width:400px} 
+			.tabs-bottom { position: relative; } 
+			.tabs-bottom .ui-tabs-panel { height: 200px; overflow: auto; width:400px} 
+			.tabs-bottom .ui-tabs-nav { position: absolute !important; left: 0; bottom: 0; right:0; padding: 0 0.2em 0.2em 0; } 
+			.tabs-bottom .ui-tabs-nav li { margin-top: -2px !important; margin-bottom: 1px !important; border-top: none; border-bottom-width: 1px; }
+			.ui-tabs-selected { margin-top: -3px !important; }
+		</style>
+        	
+		<script>
+			$(function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click(function() { return false; });
+			});
+
+			$(function() {
+				$( "#tabsu" ).tabs();
+				$( ".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *" )
+					.removeClass( "ui-corner-all ui-corner-top" )
+					.addClass( "ui-corner-bottom" );
+			});
+
+			$(function() {
+				$( "#accordion" ).accordion({										
+				});
+			});
+
+			$('myForm').addEvent('submit', function(e) {
+			new Event(e).stop();
+			var log = $('log_res').empty().addClass('ajax-loading');
+			this.send({
+				update: log,
+				onComplete: function() {
+					log.removeClass('ajax-loading');
+				}
+			});
+		});
+		</script>
+		
+</head>
+
+<body>  
+
+<h3 class="ui-widget-header ui-corner-all">Promoted Ideas</h3>
+	<table width="100%" cellspacing="30">
+	{%if promoted%}
+	<tr>
+	<td><b>Idea</b></td>
+	<td><b>Content</b></td>
+	<td><b>User</b></td>	
+	<td><b>Edit</b></td>
+	</tr>
+	{%else%}
+	No Ideas promoted
+	{%endif%}
+	{%for prom in promoted%}
+	<tr>
+	<td>{{prom.title}}</td>
+	<td>{{prom.content}}</td>
+	<td>{{prom.author}}</td>
+	<td>
+<!--
+	<form action="/demoteandhide/" method="post">
+		<div class="submitdiv">
+			<input type="hidden" name="id" value={{prom.id}}>								
+			<input type="hidden" name="type" value="idea">
+			<input type="submit" value="Unpublish"/>
+		</div>											
+	</form>
+-->
+	<form action="/demote/" method="post">
+		<div class="submitdiv">
+			<input type="hidden" name="id" value={{prom.id}}>								
+			<input type="submit" value="Demote"/>
+		</div>											
+	</form>
+	</td>
+	</tr>
+	{%endfor%}
+	</table>
+
+
+<h3 class="ui-widget-header ui-corner-all">Manage Articles</h3>
+	<table width="100%" cellspacing="30">
+	{%if articles%}
+	<tr>
+	<td><b>Article</b></td>
+	<td><b>User</b></td>
+	<td><b>Edit</b></td>
+	</tr>
+	{%else%}
+	No Articles reported
+	{%endif%}
+	{%for art in articles%}
+	<tr>
+	<td><a href="{{art.url}}" target="_blank">{{art.title}}</a></td>
+	<td>{{art.author}}</td>	
+	<td>
+	<form action="/unpublish/" method="post">
+		<div class="submitdiv">
+			<input type="hidden" name="id" value={{art.id}}>								
+			<input type="hidden" name="type" value="article">
+			<input type="submit" value="Unpublish"/>
+		</div>											
+	</form>
+	<form action="/approve/" method="post">
+		<div class="submitdiv">
+			<input type="hidden" name="id" value={{art.id}}>								
+			<input type="hidden" name="type" value="article">
+			<input type="submit" value="approve"/>
+		</div>											
+	</form>
+	</td>
+	</tr>
+	{%endfor%}
+	</table>
+	
+	<h3 class="ui-widget-header ui-corner-all">Manage Ideas</h3>
+	<table width="100%" cellspacing="30">
+	{%if ideas%}
+	<tr>
+	<td><b>Idea</b></td>
+	<td><b>Content</b></td>
+	<td><b>User</b></td>	
+	<td><b>Edit</b></td>
+	</tr>
+	{%else%}
+	No Ideas reported
+	{%endif%}
+	{%for idea in ideas%}
+	<tr>
+	<td>{{idea.title}}</td>
+	<td>{{idea.content}}</td>
+	<td>{{idea.author}}</td>
+	<td>
+	<form action="/unpublish/" method="post">
+		<div class="submitdiv">
+			<input type="hidden" name="id" value={{idea.id}}>								
+			<input type="hidden" name="type" value="idea">
+			<input type="submit" value="Unpublish"/>
+		</div>											
+	</form>
+	<form action="/approve/" method="post">
+		<div class="submitdiv">
+			<input type="hidden" name="id" value={{idea.id}}>								
+			<input type="hidden" name="type" value="idea">
+			<input type="submit" value="Approve"/>
+		</div>											
+	</form>
+	</td>
+	</tr>
+	{%endfor%}
+	</table>
+
+</body>
+</html>
+
+
+
+{% endblock %}

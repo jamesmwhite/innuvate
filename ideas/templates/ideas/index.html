@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+	<title>Idea Submission</title>
+	<head>
+	
+	<div class="slide styling" id="css-transforms"> 
+          <style> 
+            #threed-example {
+              margin: 50px 20px;
+              -webkit-transform: rotateZ(5deg);
+              -moz-transform: rotateZ(5deg);
+              -o-transform: rotateZ(5deg);
+              transform: rotateZ(5deg);
+              -webkit-transition: -webkit-transform 2s ease-in-out;
+              -moz-transition: -moz-transform 2s ease-in-out;
+              -o-transition: -o-transform 2s ease-in-out;
+              transition: transform 2s ease-in-out;
+            }
+            #threed-example:hover {
+              -webkit-transform: rotateZ(-5deg);
+              -moz-transform: rotateZ(-5deg);
+              -o-transform: rotateZ(-5deg);
+              transform: rotateZ(-5deg);
+            }
+          </style> 
+            
+		
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
+        </style>
+		<script>
+			$(function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click(function() { return false; });
+			});
+		
+			$(function() {
+				$( "#tabs" ).tabs({
+					ajaxOptions: {
+						error: function( xhr, status, index, anchor ) {
+							$( anchor.hash ).html(
+								"Couldn't load this tab. We'll try to fix this as soon as possible. " +
+								"If this wouldn't be a demo." );
+						}
+					}
+				});
+			});
+			
+			
+		</script>
+	</head>
+	<body>
+<!-- 		<h1 align="center">-innUvate-</h1>   -->
+		<font size="7" align="center"><pre id="threed-example">-- innUvate --</pre> </font>
+		{%if user.is_authenticated%}
+		Welcome {{user}} (<a href="/accounts/logout/?next=/">logout</a>)
+		{%else%}
+		Welcome Guest (<a href="/accounts/login/?next=/">login</a> or <a href="/accounts/register/">register</a>)
+		{%endif%}		
+		<div class="tabsclass"><!--1-->
+			<div id="tabs"><!--2-->
+				<ul>
+					<li><a href="/topten">Top Ideas</a></li>
+					<li><a href="/articles">Articles</a></li>
+					{%if user.is_staff%}
+					<li><a href="/manage">Manage</a></li>
+					{%endif%}
+<!-- 					<li><a href="/reports">Reports</a></li> -->
+					
+				</ul>
+			</div><!--2-->
+			<div align="right">Copyright James White</div>
+<!-- 				<a href="/logout">Logout</a>  -->
+			</div><!--1-->
+	</body>
+</html>
+{% endblock %}
