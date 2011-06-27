@@ -56,21 +56,21 @@
 		TagCanvas.textHeight = 25;
 		TagCanvas.outlineColour = '#60f';
 		TagCanvas.outlineThickness = 3;
-		TagCanvas.maxSpeed = 0.05;
+		TagCanvas.maxSpeed = 0.10;
 		TagCanvas.minBrightness = 0.1;
 		TagCanvas.depth = 0.92;
 		TagCanvas.pulsateTo = 0.2;
 		TagCanvas.pulsateTime = 0.5;
 		TagCanvas.initial = [0.1,-0.1];
-		TagCanvas.decel = 0.98;
+		TagCanvas.decel = 1.00;
 		TagCanvas.reverse = true;
 		TagCanvas.hideTags = false;
 		TagCanvas.shadow = '#ccf';
 		TagCanvas.shadowBlur = 3;
 		TagCanvas.weight = true;
-		TagCanvas.weightSize = 10;
+		TagCanvas.weightSize = 1.0;
 		TagCanvas.weightFrom = 'data-weight';
-/* 		TagCanvas.weightMode = 'both'; */
+		TagCanvas.weightMode = 'colour';
 		try {
 			TagCanvas.Start('myCanvas');
 		} catch(e) {
@@ -95,14 +95,11 @@
 
 <body>
   {%if ideas%}
-  <canvas width="600" height="200" id="myCanvas">
-  <p>Browser does not support html5 canvas</p>
-  <ul>
+  <canvas width="800" height="200" id="myCanvas">
+  Browser does not support html5 canvas
   {%for tag in tags%}
   <li><a href="/tag/{{tag.tag}}/"  data-weight="{{tag.val}}">{{tag.tag}}</a></li>
   {%endfor%}
-
-  </ul>
   </canvas>
   {%endif%}
 
@@ -113,15 +110,21 @@
 			{% for idea in ideas %}							
 			<h3><a href="#">{{idea.title}}</a></h3>											
 			<div>
-			<table cellpadding="10" width="100%">
+			<table cellpadding="1" width="100%">
 				<tr>
 				<td width="10%" align="center"><ideahead>Author</ideahead></td>
-				<td width="50%" align="center"><ideahead>Content</ideahead></td>
+				<td width="55%" align="center"><ideahead>Content</ideahead></td>
 				{%if user%}								
 				{% endif %}
-					<td width="10%"align="center"><ideahead></ideahead></td>
-					<td width="10%"align="center"><ideahead></ideahead></td>
+					<td width="5%"align="center"><ideahead></ideahead></td>
+					{%if not idea.hasvoted%}
+					<td width="5%"align="center"><ideahead>Vote</ideahead></td>
+					{%else%}
+					<td width="5%"align="center"><ideahead></ideahead></td>
+					{%endif%}
+					<td width="5%"align="center"><ideahead></ideahead></td>
 					<td width="10%"align="center"><ideahead>Votes</ideahead></td>
+					<td width="10%"align="center"><ideahead></ideahead></td>
 				</tr>
 				<tr>
 				<td>
@@ -136,51 +139,61 @@
 				</td>
 				<td>
 					{%if user.is_authenticated%}
-
 						{%if not idea.hasvoted%}
+						<div class="submitdiv">
 							<form action="/vote/" method="post">
-								<div class="submitdiv">
 									<input type="hidden" name="id" value={{idea.id}}>
-									<input type="hidden" name="vote" value="like">
-									<input type="image" src="/media/images/thumb_up.png" HEIGHT="40" WIDTH="40" BORDER="0" ALT="Submit Form"/>
-								</div>
+									<input type="hidden" name="vote" value="1">
+									<input type="submit" value="1" />
 							</form>
+							</div>
 							{%else%}
 							Already Voted!
 							{%endif%}
 						{%endif%}
-				</td>
-				<td>
+						</td>
+						<td>
 				{%if user.is_authenticated%}
 					{%if not idea.hasvoted%}
+					<div class="submitdiv">
 						<form action="/vote/" method="post">
-							<div class="submitdiv">
 								<input type="hidden" name="id" value={{idea.id}}>
-								<input type="hidden" name="vote" value="nolike">
-								<input type="hidden" name="vote" value="nolike">
-								<input type="image" src="/media/images/thumb_down.png" HEIGHT="40" WIDTH="40" BORDER="0" ALT="Submit Form"/>
-							</div>											
+								<input type="hidden" name="vote" value="3">
+								<input type="submit" value="3" />
 						</form>
+						</div>
 						{%else%}
-
 							{%endif%}
 					{%endif%}
+					</td>
+					<td>
+				{%if user.is_authenticated%}
+					{%if not idea.hasvoted%}
+					<div class="submitdiv">
+						<form action="/vote/" method="post">
+								<input type="hidden" name="id" value={{idea.id}}>
+								<input type="hidden" name="vote" value="5">
+								<input type="submit" value="5"/>											
+						</form>
+							</div>
+							{%endif%}
+					{%endif%}
+					</td>
 					<td align="center">
 						<votecount>{{idea.votecount}}</votecount>
-						</br>
-						</br>
+						</td>
+						<td>
 						{%if idea.hasstar%}
 						<img src="/media/images/star.png"/>
 						{%else%}
 						<form action="/dostar/" method="post">
 							<div class="submitdiv">
 								<input type="hidden" name="id" value={{idea.id}}>
-								<input type="image" src="/media/images/empty_star.png" onmouseover="this.src='/media/images/star.png'" onmouseout="this.src='/media/images/empty_star.png'"  BORDER="0" ALT="Submit Form"/>
+								<input type="image" src="/media/images/empty_star.png" onmouseover="this.src='/media/images/star.png'" onmouseout="this.src='/media/images/empty_star.png'"  ALT="Submit Form"/>
 							</div>											
 						</form>
 						{%endif%}
-					</td>
-					</td>
+						</td>
 				</tr>
 			</table>
 			{%if not idea.tags%}			
@@ -191,19 +204,18 @@
 			{%for tag in idea.tags%}
 			<a href="/tag/{{tag}}/">{{tag}}</a>
 			{%endfor%}
-			</br>
+			<br/>
 			<font size="1"> Added: {{idea.date}}</font>	
-			</br>
 			<font size="1"> If you feel this idea is inappropriate please</font> <font size="1" color="red"><a href="/report/{{idea.id}}">report</a></font>
-			</br>
+			<br/>
 			{%if user.is_staff%}
 			<form action="/promote/" method="post">
-							<div class="submitdiv">
-								<input type="hidden" name="id" value={{idea.id}}>
-								<input type="submit" value="Promote"/>
+				<div class="submitdiv">
+				<input type="hidden" name="id" value={{idea.id}}>
+				<input type="submit" value="Promote"/>
+				</div>
 			{%endif%}
 			<hr/>
-			<h3>Comments</h3>
 			{%if idea.comments %}
 			{%for comment in idea.comments%}
 			 <div class="triangle-isosceles"><b>Comment: </b> {{comment.content}} <br/><b>Author:</b> {{comment.author}}  <font size="1">({{comment.date}})</font> </div>
@@ -212,14 +224,12 @@
 			No Comments
 			{%endif%}
 			<hr/>
-			<br/>
 			{%if user.is_authenticated%}
 				<form id="myForm" action="/addcomment/" method="post">
 					<div id="form_box">
-						<div>
 							<input type="hidden" name="id" value={{idea.id}}>
-							<textarea type="text" rows="5" cols="40" name="content"/>
-						</div>
+							<textarea type="text" rows="3" cols="50" name="content"/>
+							<br/>
 						<input value="Add Comment" type="submit" name="button" id="submitter"/>
 					</div>
 				</form>
@@ -240,7 +250,7 @@
 					<ideahead>Title:</ideahead><br/><input type="text" name="title" size="60" placeholder="New idea"/>
 				</div>
 				<div>
-					<ideahead>Idea:</ideahead><br/><textarea type="text" rows="5" cols="60" name="content" placeholder="Sample idea text"/>
+					<ideahead>Idea:</ideahead><br/><textarea type="text" rows="5" cols="41" name="content" placeholder="Sample idea text"/>
 				</div>
 				<div>										
 					<ideahead>Tags:</ideahead><br/><input type="text" name="tags" size="60" placeholder="marketing,sales,mobile"/>
@@ -251,7 +261,6 @@
 			<span class="clr"><!-- spanner --></span>
 			</div>
 		</form>
-		<a href="/accounts/logout/?next=/">logout</a>
 	{%else%}
 	To submit ideas, you must <a href="/accounts/login/?next=/">login</a> or if you are a new user
 		

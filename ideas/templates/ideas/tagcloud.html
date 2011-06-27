@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+		<link rel="stylesheet" href="/media/tag.css">
+		<script src="/media/tagcanvas.min.js" type="text/javascript"></script>	
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
+        </style>		
+				<style>
+			#tabsu { height: 200px; width:400px} 
+			.tabs-bottom { position: relative; } 
+			.tabs-bottom .ui-tabs-panel { height: 200px; overflow: auto; width:400px} 
+			.tabs-bottom .ui-tabs-nav { position: absolute !important; left: 0; bottom: 0; right:0; padding: 0 0.2em 0.2em 0; } 
+			.tabs-bottom .ui-tabs-nav li { margin-top: -2px !important; margin-bottom: 1px !important; border-top: none; border-bottom-width: 1px; }
+			.ui-tabs-selected { margin-top: -3px !important; }
+		</style>
+		
+		<script type="text/javascript"> 
+		//<![CDATA[
+		$(document).ready(function() {
+		TagCanvas.interval = 40;
+		TagCanvas.textFont = 'Impact,Arial Black,sans-serif';
+		TagCanvas.textColour = '#00f';
+		TagCanvas.textHeight = 25;
+		TagCanvas.outlineColour = '#60f';
+		TagCanvas.outlineThickness = 3;
+		TagCanvas.maxSpeed = 0.10;
+		TagCanvas.minBrightness = 0.1;
+		TagCanvas.depth = 0.92;
+		TagCanvas.pulsateTo = 0.2;
+		TagCanvas.pulsateTime = 0.5;
+		TagCanvas.initial = [0.1,-0.1];
+		TagCanvas.decel = 1.00;
+		TagCanvas.reverse = true;
+		TagCanvas.hideTags = false;
+		TagCanvas.shadow = '#ccf';
+		TagCanvas.shadowBlur = 3;
+		TagCanvas.weight = true;
+		TagCanvas.weightSize = 1.0;
+		TagCanvas.weightFrom = 'data-weight';
+		TagCanvas.weightMode = 'colour';
+		try {
+			TagCanvas.Start('myCanvass');
+		} catch(e) {
+		}
+		var i, g, gc = document.getElementById('gradient').getContext('2d');
+		g = gc.createLinearGradient(0, 0, 0, gc.canvas.height);
+		for(i in TagCanvas.weightGradient)
+			g.addColorStop(i, TagCanvas.weightGradient[i]);
+		gc.fillStyle = g;
+		gc.fillRect(0,0,gc.canvas.width,gc.canvas.height);
+		});
+		var g1 = {
+		0:   'red',
+		0.5: 'orange',
+		1:   'rgba(0,0,0,0.1)'
+		};
+		//]]>
+		</script> 	
+</head>
+
+<body>
+  <canvas width="800" height="450" id="myCanvass">
+  Browser does not support html5 canvas
+  {%for tag in tags%}
+  <li><a href="/tag/{{tag.tag}}/"  data-weight="{{tag.val}}">{{tag.tag}}</a></li>
+  {%endfor%}
+  </canvas>
+
+
+</body>
+</html>
+
+{% endblock %}

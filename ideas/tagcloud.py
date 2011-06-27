@@ -15,16 +15,9 @@ class tagclass:
 def go(request):
 	user = request.user
 	
-	filtertag =  request.META['HTTP_REFERER']
-	showtag = False
-	if filtertag.find('/tag/') >=0:
-		showtag = True
-		filtertag = filtertag.split('/')[4]
-	else:
-		filtertag = None
-	
 	tags = Idea.objects.item_frequencies('tags', normalize=True)
 	top_tags = sorted(tags.items(), key=itemgetter(1), reverse=True)[:6]
+	aaa = top_tags
 	tagobs = []
 	for key in top_tags:
 		tg = tagclass()
@@ -33,27 +26,12 @@ def go(request):
 		tg.color = str(random.randrange(10,30,1))
 		if len(tg.tag)>0:
 			tagobs.append(tg)
-
-	
-	ideas = None
-	ideas = Idea.objects(Q(isvisible=True) & Q(ispromoted=False)).order_by('-votecount')[:20]
-	s_ideas = []
-	for idea in ideas:
-		if str(request.user) in idea.voters:
-			idea.hasvoted = True
-		if showtag:
-			if filtertag in idea.tags:
-				s_ideas.append(idea)
-		else:
-			s_ideas.append(idea)
-
 	
 	template_values = {
-		'ideas': s_ideas,
 		'user' : user,
 		'tags': tagobs,
-		'filtertag':filtertag,
+		'aaa':aaa,
 	}
 
-	path = os.path.join(os.path.dirname(__file__), 'templates/ideas/topten.html')
+	path = os.path.join(os.path.dirname(__file__), 'templates/ideas/tagcloud.html')
 	return render_to_response(path, template_values)

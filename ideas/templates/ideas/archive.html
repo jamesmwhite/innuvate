@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+		<link rel="stylesheet" href="/media/tag.css">
+		<script src="/media/tagcanvas.min.js" type="text/javascript"></script>	
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
+        </style>		
+				<style>
+			#tabsu { height: 200px; width:400px} 
+			.tabs-bottom { position: relative; } 
+			.tabs-bottom .ui-tabs-panel { height: 200px; overflow: auto; width:400px} 
+			.tabs-bottom .ui-tabs-nav { position: absolute !important; left: 0; bottom: 0; right:0; padding: 0 0.2em 0.2em 0; } 
+			.tabs-bottom .ui-tabs-nav li { margin-top: -2px !important; margin-bottom: 1px !important; border-top: none; border-bottom-width: 1px; }
+			.ui-tabs-selected { margin-top: -3px !important; }
+		</style>
+			
+
+		
+</head>
+
+<body>
+
+
+<h3 class="ui-widget-header ui-corner-all">Archive</h3>
+	{%if ideas%}
+		<div id="accordions"><!--5-->							
+			{% for idea in ideas %}							
+			<h3>{{idea.title}}</h3>											
+			<div>
+			<table cellpadding="4" width="100%">
+				<tr>
+				<td width="10%" align="center"><ideahead>Author</ideahead></td>
+				<td width="50%" align="center"><ideahead>Content</ideahead></td>
+					<td width="10%"align="center"><ideahead>Votes</ideahead></td>
+				</tr>
+				
+				<tr>
+				<td align="center">
+				{% if idea.author %}
+					{{ idea.author }}
+				{% else %}
+					</b>Anonymous
+				{% endif %}
+				</td>
+				<td align="center">
+				{{ idea.content|escape }}
+				</td>
+				<td align="center">
+					<votecount>{{idea.votecount}}</votecount>
+				</td>
+				</tr>
+			</table>
+			{%if not idea.tags%}			
+			No tags
+			{%else%}
+			<b>Tags:</b>
+			{%endif%}
+			{%for tag in idea.tags%}
+			<a href="/tag/{{tag}}/">{{tag}}</a>
+			{%endfor%}
+			</br>
+			<font size="1"> Added: {{idea.date}}</font>	
+			</br>
+			{%if user.is_staff%}
+			<form action="/promote/" method="post">
+							<div class="submitdiv">
+								<input type="hidden" name="id" value={{idea.id}}>
+								<input type="submit" value="Promote"/>
+			{%endif%}
+			<hr/>
+			
+			
+			</div>							
+			{% endfor %}
+		</div><!--5-->
+	{%else%}
+	No Ideas Submitted
+	{%endif%}
+	</body>
+</html>
+
+{% endblock %}

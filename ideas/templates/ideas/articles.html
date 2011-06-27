@@ -53,12 +53,14 @@
 	<table width="100%" cellspacing="30">
 	{%if articles%}
 	<tr>
-	<td><b>Article</b></td>
-	<td><b>Tags</b></td>
-	<td><b>User</b></td>
+	<td width="30%"><b>Article</b></td>
+	<td width="25%"><b>Tags</b></td>
+	<td width="10%"><b>User</b></td>
+	<td width="5%"></td>
+	<td width="5%">Vote</td>
+	<td width="5%"></td>
+	<td width="10%"><b>Votes</b></td>
 	<td width="10%"></td>
-	<td width="10%"></td>
-	<td><b>Vote</b></td>
 	</tr>
 	{%else%}
 	No articles submitted
@@ -76,7 +78,7 @@
 								<div class="submitdiv">
 									<input type="hidden" name="id" value={{art.id}}>
 									<input type="hidden" name="vote" value="like">
-									<input align="middle" type="image" src="/media/images/thumb_up.png" HEIGHT="40" WIDTH="40" BORDER="0" ALT="Submit Form"/>
+									<input align="middle" type="submit" value="1"/>
 								</div>
 							</form>
 							{%else%}
@@ -91,7 +93,7 @@
 							<div class="submitdiv">
 								<input type="hidden" name="id" value={{art.id}}>
 								<input type="hidden" name="vote" value="nolike">
-								<input align="middle" type="image" src="/media/images/thumb_down.png" HEIGHT="40" WIDTH="40" BORDER="0" ALT="Submit Form"/>
+								<input align="middle" type="submit" value="3"/>
 							</div>											
 						</form>
 						{%else%}
@@ -99,6 +101,22 @@
 							{%endif%}
 					{%endif%}
 	</td>
+	<td>
+	{%if user.is_authenticated%}
+					{%if not art.hasvoted%}
+						<form action="/voteart/" method="post">
+							<div class="submitdiv">
+								<input type="hidden" name="id" value={{art.id}}>
+								<input type="hidden" name="vote" value="5">
+								<input align="middle" type="submit" value="5"/>
+							</div>											
+						</form>
+						{%else%}
+
+							{%endif%}
+					{%endif%}
+	</td>
+
 	<td><votecount>{{art.votecount}}</votecount></td>
 	<td>				
 			<font size="1" color="red"><a href="/reportarticle/{{art.id}}">report</a></font>
@@ -136,52 +154,6 @@
 </body>
 </html>
 
-<script>
-$(document).ready(function() {
 
-$.ajaxSetup({ 
-     beforeSend: function(xhr, settings) {
-         function getCookie(name) {
-             var cookieValue = null;
-             if (document.cookie && document.cookie != '') {
-                 var cookies = document.cookie.split(';');
-                 for (var i = 0; i < cookies.length; i++) {
-                     var cookie = jQuery.trim(cookies[i]);
-                     // Does this cookie string begin with the name we want?
-                 if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                     break;
-                 }
-             }
-         }
-         return cookieValue;
-         }
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     } 
-});
-
-
-  var initialTitleChange = true;
-  var initialSlugChange = true;
-
-  var perform_update = function(field, val) {
-    var data = {};
-    data[field] = val;
-    var args = { type:"POST", url:"update/", data:data, complete:done };
-    $.ajax(args);
-  };
-
-  var done = function(res, status) {
-    if (status == "success") display_success("Updated successfully.", $(".text"));
-    else display_error(res.responseText, $(".text"));
-  }
-
-
-});
-
-</script>
 
 {% endblock %}

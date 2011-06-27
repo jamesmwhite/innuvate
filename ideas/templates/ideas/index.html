@@ -7,7 +7,7 @@
 	<div class="slide styling" id="css-transforms"> 
           <style> 
             #threed-example {
-              margin: 50px 20px;
+              margin: 5px 100px;
               -webkit-transform: rotateZ(5deg);
               -moz-transform: rotateZ(5deg);
               -o-transform: rotateZ(5deg);
@@ -51,7 +51,6 @@
 		</script>
 	</head>
 	<body>
-<!-- 		<h1 align="center">-innUvate-</h1>   -->
 		<font size="7" align="center"><pre id="threed-example">-- innUvate --</pre> </font>
 		{%if user.is_authenticated%}
 		Welcome {{user}} (<a href="/accounts/logout/?next=/">logout</a>)
@@ -63,8 +62,11 @@
 				<ul>
 					<li><a href="/topten">Top Ideas</a></li>
 					<li><a href="/articles">Articles</a></li>
+					<li><a href="/allideas">All Ideas</a></li>
+					<li><a href="/tagcloud">Tag Cloud</a></li>
 					{%if user.is_staff%}
 					<li><a href="/manage">Manage</a></li>
+					<li><a href="/archive">Archive</a></li>
 					{%endif%}
 <!-- 					<li><a href="/reports">Reports</a></li> -->
 					

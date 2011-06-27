@@ -78,11 +78,12 @@ def voteart(request):
 				if(len(articles) >0):
 					art = articles[0]
 					curcount = art.votecount
-					if post['vote']=='like':
+					if post['vote']=='1':
 						art.votecount = curcount + 1
-					else:
-						if(curcount >0):
-							art.votecount = art.votecount - 1
+					elif post['vote']=='3':
+						art.votecount = curcount + 3
+					elif post['vote']=='5':
+						art.votecount = curcount + 5	
 					art.voters.append(str(request.user))
 					art.save()
 				return HttpResponseRedirect('/')
@@ -153,6 +154,7 @@ def vote(request):
 	error_msg = u"No POST data sent."	
 	if request.method == "POST":
 		post = request.POST.copy()
+		print 'post = '+str(post)
 		if post.has_key('id') and post.has_key('vote'):
 			try:
 				iid = post['id']
@@ -161,11 +163,12 @@ def vote(request):
 					idea = ideas[0]
 					curcount = idea.votecount
 					print post['vote']
-					if post['vote']=='like':
+					if post['vote']=='1':
 						idea.votecount = curcount + 1
-					else:
-						if(curcount >0):
-							idea.votecount = idea.votecount - 1
+					elif post['vote']=='3':
+						idea.votecount = idea.votecount + 3
+					elif post['vote']=='5':
+						idea.votecount = idea.votecount + 5
 					idea.voters.append(str(request.user))
 					idea.save()
 				return HttpResponseRedirect('/')
