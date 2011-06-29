@@ -8,7 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
-    (r'^', include('innov9.ideas.urls')),
+    (r'^', include('innUvate.ideas.urls')),
     # Examples:
     # url(r'^$', 'innov9.views.home', name='home'),
     # url(r'^innov9/', include('innov9.foo.urls')),
