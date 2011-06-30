@@ -1,0 +1,19 @@
+Requirements
+====================
+easy_install
+pip
+Django
+Python
+Mongodb
+MongoEngine
+django-registration
+
+Install
+===============
+run command "python manage.py syncdb"
+
+Running innUvate
+=================
+run command "python manage.py runserver"
+
+Thats it! enjoy :)
