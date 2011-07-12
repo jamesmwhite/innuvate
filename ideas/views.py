@@ -7,22 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 
-@login_required
-def create_idea(request):
-    error_msg = u"No POST data sent."
-    if request.method == "POST":
-        post = request.POST.copy()
-        if post.has_key('slug') and post.has_key('title'):
-            slug = post['slug']
-            if Idea.objects.filter(slug=slug).count() > 0:
-                error_msg = u"Slug already in use."
-            else:
-                title = post['title']
-                new_idea = Idea.objects.create(title=title,slug=slug)
-                return HttpResponseRedirect(new_idea.get_absolute_url())
-        else:
-            error_msg = u"Insufficient POST data (need 'slug' and 'title'!)"
-    return HttpResponseServerError(error_msg)
+
 
 @login_required
 def dostar(request):
@@ -155,20 +140,16 @@ def vote(request):
 	if request.method == "POST":
 		post = request.POST.copy()
 		print 'post = '+str(post)
-		if post.has_key('id') and post.has_key('vote'):
+		if post.has_key('id') and post.has_key('star1'):
 			try:
 				iid = post['id']
 				ideas = Idea.objects(id=iid)
 				if(len(ideas) >0):
 					idea = ideas[0]
 					curcount = idea.votecount
-					print post['vote']
-					if post['vote']=='1':
-						idea.votecount = curcount + 1
-					elif post['vote']=='3':
-						idea.votecount = idea.votecount + 3
-					elif post['vote']=='5':
-						idea.votecount = idea.votecount + 5
+					print post['star1']
+					voteval = int(post['star1'])		
+					idea.votecount = idea.votecount + voteval
 					idea.voters.append(str(request.user))
 					idea.save()
 				return HttpResponseRedirect('/')
@@ -254,6 +235,7 @@ def submitidea(request):
 				idea.author = str(request.user)
 				idea.title = post['title']
 				idea.votecount = 0
+				idea.viewcount = 0
 				idea.content = content
 				if idea.content and idea.title and idea.author:
 					try:

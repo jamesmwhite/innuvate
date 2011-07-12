@@ -47,6 +47,7 @@ class Idea(Document):
 	reported = BooleanField(default=False) 
 	isvisible = BooleanField(default=True)
 	ispromoted = BooleanField(default=False) 
+	viewcount = IntField() 
 
 	@queryset_manager
 	def objects(doc_cls, queryset):

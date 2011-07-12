@@ -17,9 +17,15 @@ def go(request):
 	
 	filtertag =  request.META['HTTP_REFERER']
 	showtag = False
+	tabselected=None
+	ideaid=None
 	if filtertag.find('/tag/') >=0:
 		showtag = True
 		filtertag = filtertag.split('/')[4]
+	elif filtertag.find('/idea/') >=0:
+		ideaid = filtertag.split('/')[5]
+		filtertag=None
+		tabselected='4'
 	else:
 		filtertag = None
 	
@@ -53,6 +59,8 @@ def go(request):
 		'user' : user,
 		'tags': tagobs,
 		'filtertag':filtertag,
+		'tabselected':tabselected,
+		'ideaid':ideaid,
 	}
 
 	path = os.path.join(os.path.dirname(__file__), 'templates/ideas/topten.html')

@@ -21,6 +21,8 @@ urlpatterns = patterns(
 	(r'^unpublish/$','ideas.views.unpublish'),
 	(r'^approve/$','ideas.views.approve'),
     (r'^voteart/$','ideas.views.voteart'),
+    (r'^idea/.+/$','ideas.idea_main.go'),
+    (r'^ideaview/.+/$','ideas.idea.go'),
 	(r'^$',
      'ideas.idea_main.go'),
      (r'^topten$',

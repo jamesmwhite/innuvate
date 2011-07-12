@@ -1,81 +1,133 @@
 body {
-  font-family: Verdana, Helvetica, sans-serif;
-  background-color: #DDDDDD;
+	font-family: Verdana, Helvetica, sans-serif;
+	background-color: #FFFFFF;
 }
 
-h1{
-font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-color:#1c94c4;
-background-color: #DDDDDD;
+a{
+	text-decoration: none;
 }
 
-ideahead{
-font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-color:#1c94c4;
-font-weight:bold;
+h1 {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color:#1c94c4;
+	background-color: #DDDDDD;
+}
+
+
+view {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color: #628D00;
 
 }
 
-votecount{
-font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-color:#1c94c4;
-font-weight:bold;
-background-color: white;
-padding: 10;
-border: 1px solid black;
+normal {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color: #492AA3;
+	font-size: 12px;
 }
 
-.speech-bubble
-  {
-   width: 400px;
-   padding: 5px;
-   background: white;
-   color: black;
-   font: normal 12px "Segoe UI", Arial, Sans-serif;
-   -moz-border-radius: 5px;
-   -webkit-border-radius: 5px;
-   border-radius: 5px;
-  }
-  .speech-bubble:after
-  {
-   content: "";
-   border: solid 5px transparent; /* set all borders to 10 pixels width */
-   border-top-color: white; /* the callout */
-   border-bottom: 0; /* we do not need the bottom border in this case */
-   width: 0;
-   height: 0;
-   overflow: hidden;
-   display: block;
-   position: relative;
-   bottom: -10px; /* border-width of the :after element + padding of the root element */
-   margin: auto;
-  }
-  
-  .triangle-isosceles {
-  width: 50%;
-   position:relative;
-   padding:15px;
-   margin:1em 0 3em;
-   color:#000;
-   background:white;
-
-   /* css3 */
-   -moz-border-radius:10px;
-   -webkit-border-radius:10px;
-   border-radius:10px;
-   background:-moz-linear-gradient(top, #f9d835, #f3961c);
-   background:linear-gradient(top, #f9d835, #f3961c);
+labels {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color: #492AA3;
+	font-size: 12px;
 }
 
+h3 {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color: #492AA3;
+	font-size: 17px;
+}
+
+
+report {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color: red;
+	font-size: 12px;
+}
+
+ideatitle {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color: #666666;
+	font-size: 18px;
+}
+
+
+ideahead {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color:#1c94c4;
+	font-weight:bold;
+}
+votecount {
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	color:#FFFFFF;
+	font-weight: normal;
+	background-color: #492AA3;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+
+tagsurround {
+	font-size:11px;
+	color:black;
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #628D00;
+	padding: 1px;
+
+}
+.speech-bubble {
+	width: 400px;
+	padding: 5px;
+	background: white;
+	color: black;
+	font: normal 12px "Segoe UI", Arial, Sans-serif;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+.speech-bubble:after {
+	content: "";
+	border: solid 5px transparent;
+	/* set all borders to 10 pixels width */
+	border-top-color: black;
+	/* the callout */
+	border-bottom: 0;
+	/* we do not need the bottom border in this case */
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	display: block;
+	position: relative;
+	bottom: -10px;
+	/* border-width of the :after element + padding of the root element */
+	margin: auto;
+}
+.triangle-isosceles {
+	width: 50%;
+	position:relative;
+	padding:15px;
+	margin:1em 0 3em;
+	color:#000;
+	background:white;
+	/* css3 */
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	background:-moz-linear-gradient(top, #f9d835, #f3961c);
+	background:linear-gradient(top, #f9d835, #f3961c);
+}
 /* creates triangle */
 .triangle-isosceles:after {
-   content:"";
-   display:block; /* reduce the damage in FF3.0 */
-   position:absolute;
-   bottom:-15px;
-   left:50px;
-   width:0;
-   border-width:15px 15px 0;
-   border-style:solid;
-   border-color:white transparent;
+	content:"";
+	display:block;
+	/* reduce the damage in FF3.0 */
+	position:absolute;
+	bottom:-15px;
+	left:50px;
+	width:0;
+	border-width:15px 15px 0;
+	border-style:solid;
+	border-color:white transparent;
 }
