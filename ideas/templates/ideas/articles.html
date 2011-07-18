@@ -1,159 +1,202 @@
 {% extends "base.html" %}
 {% block content %}
 <html>
-<head>
-        <style type="text/css">
-            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
-        </style>		
+	<head>
+		<style type="text/css">
+			body, html {
+				font-family:helvetica,arial,sans-serif;
+				font-size:90%;
+				color:#1c94c4
+			}
+		</style>
 		<script>
-			$(function() {
+			$( function() {
 				$( "button, input:submit, a", ".submitdiv" ).button();
-				$( "a", ".submitdev" ).click(function() { return false; });
+				$( "a", ".submitdev" ).click( function() {
+					return false;
+				});
 			});
 		</script>
 		<script>
-			$(function() {
+			$( function() {
 				$( "#tabsu" ).tabs();
 				$( ".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *" )
-					.removeClass( "ui-corner-all ui-corner-top" )
-					.addClass( "ui-corner-bottom" );
+				.removeClass( "ui-corner-all ui-corner-top" )
+				.addClass( "ui-corner-bottom" );
 			});
 		</script>
 		<style>
-			#tabsu { height: 200px; width:400px} 
-			.tabs-bottom { position: relative; } 
-			.tabs-bottom .ui-tabs-panel { height: 200px; overflow: auto; width:400px} 
-			.tabs-bottom .ui-tabs-nav { position: absolute !important; left: 0; bottom: 0; right:0; padding: 0 0.2em 0.2em 0; } 
-			.tabs-bottom .ui-tabs-nav li { margin-top: -2px !important; margin-bottom: 1px !important; border-top: none; border-bottom-width: 1px; }
-			.ui-tabs-selected { margin-top: -3px !important; }
+			#tabsu {
+				height: 200px;
+				width:400px
+			}
+			.tabs-bottom {
+				position: relative;
+			}
+			.tabs-bottom .ui-tabs-panel {
+				height: 200px;
+				overflow: auto;
+				width:400px
+			}
+			.tabs-bottom .ui-tabs-nav {
+				position: absolute !important;
+				left: 0;
+				bottom: 0;
+				right:0;
+				padding: 0 0.2em 0.2em 0;
+			}
+			.tabs-bottom .ui-tabs-nav li {
+				margin-top: -2px !important;
+				margin-bottom: 1px !important;
+				border-top: none;
+				border-bottom-width: 1px;
+			}
+			.ui-tabs-selected {
+				margin-top: -3px !important;
+			}
 		</style>
 		<script>
-			$(function() {
-				$( "#accordion" ).accordion({										
+			$( function() {
+				$( "#accordion" ).accordion({
 				});
 			});
 		</script>
 		<script>
 			$('myForm').addEvent('submit', function(e) {
-			new Event(e).stop();
-			var log = $('log_res').empty().addClass('ajax-loading');
-			this.send({
-				update: log,
-				onComplete: function() {
-					log.removeClass('ajax-loading');
-				}
+				new Event(e).stop();
+				var log = $('log_res').empty().addClass('ajax-loading');
+				this.send({
+					update: log,
+					onComplete: function() {
+						log.removeClass('ajax-loading');
+					}
+				});
 			});
-		});
 		</script>
+	</head>
+
+	<body>
 		
-</head>
 
-<body>  
-<h3 class="ui-widget-header ui-corner-all">Articles</h3>
-	<table width="100%" cellspacing="30">
-	{%if articles%}
-	<tr>
-	<td width="30%"><b>Article</b></td>
-	<td width="25%"><b>Tags</b></td>
-	<td width="10%"><b>User</b></td>
-	<td width="5%"></td>
-	<td width="5%">Vote</td>
-	<td width="5%"></td>
-	<td width="10%"><b>Votes</b></td>
-	<td width="10%"></td>
-	</tr>
-	{%else%}
-	No articles submitted
-	{%endif%}
-	{%for art in articles%}
-	<tr>
-	<td><a href="{{art.url}}" target="_blank">{{art.title}}</a></td>
-	<td>{%for tag in art.tags%}{{tag}} {%endfor%}</td>
-	<td>{{art.author}}</td>
-	<td>
-	{%if user.is_authenticated%}
+		{%if articles%}
 
-						{%if not art.hasvoted%}
-							<form action="/voteart/" method="post">
-								<div class="submitdiv">
-									<input type="hidden" name="id" value={{art.id}}>
-									<input type="hidden" name="vote" value="like">
-									<input align="middle" type="submit" value="1"/>
-								</div>
-							</form>
-							{%else%}
-							Already Voted!
-							{%endif%}
-						{%endif%}
-	</td>
-	<td>
-	{%if user.is_authenticated%}
-					{%if not art.hasvoted%}
-						<form action="/voteart/" method="post">
-							<div class="submitdiv">
-								<input type="hidden" name="id" value={{art.id}}>
-								<input type="hidden" name="vote" value="nolike">
-								<input align="middle" type="submit" value="3"/>
-							</div>											
-						</form>
-						{%else%}
+		{%else%}
+		No articles submitted
+		{%endif%}
+		{%for art in articles%}
+		<table cellpadding="1" width="100%">
+			<tr>
+				<td width=80%>
+				<h3>{{art.title}}</h3>
+					
+				
+				<a href="{{art.url}}">
+				<view>
+					Go to article&#8594;
+				</view>
+				</a>
+				</br>
+				<normal>
+					By	{% if art.author %}
+					{{ art.author }}
+					{% else %}Anonymous
+					{% endif %}, {{art.date}}
+				</normal>
+				<a href="/reportarticle/{{art.id}}">
+				<report>
+					report
+				</report>
+				</a>
 
-							{%endif%}
-					{%endif%}
-	</td>
-	<td>
-	{%if user.is_authenticated%}
-					{%if not art.hasvoted%}
-						<form action="/voteart/" method="post">
-							<div class="submitdiv">
-								<input type="hidden" name="id" value={{art.id}}>
-								<input type="hidden" name="vote" value="5">
-								<input align="middle" type="submit" value="5"/>
-							</div>											
-						</form>
-						{%else%}
+				<br/>
+				{%for tag in art.tags%}
+				<a href="/tag/{{tag}}/">
+				<tagsurround>
+					{{tag}}
+				</tagsurround>
+				</a> &nbsp;
+				{%endfor%}
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{art.viewcount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Views
+					</labels>
+				</center>
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{art.votecount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Votes
+					</labels>
+				</center>
+				</td>
+				<!-- <td>
+				{%if idea.hasstar%}
+				<img src="/media/images/star.png"/>
+				{%else%}
+				<form action="/dostar/" method="post">
+					<div class="submitdiv">
+						<input type="hidden" name="id" value={{idea.id}}>
+						<input type="image" src="/media/images/empty_star.png" onmouseover="this.src='/media/images/star.png'" onmouseout="this.src='/media/images/empty_star.png'"  ALT="Submit Form"/>
+					</div>
+				</form>
+				{%endif%}
+				</td> -->
 
-							{%endif%}
-					{%endif%}
-	</td>
+			</tr>
+		</table>
+		<hr/>
+		{%endfor%}
 
-	<td><votecount>{{art.votecount}}</votecount></td>
-	<td>				
-			<font size="1" color="red"><a href="/reportarticle/{{art.id}}">report</a></font>
-	</td>
-	</tr>
-	{%endfor%}
-	</table>
-	<hr/>
-	<h3 class="ui-widget-header ui-corner-all">Submit New Article</h3>
-	{%if user.is_authenticated%}
+
+		
+		{%if user.is_authenticated%}
+		<h3>Submit New Article</h3>
 		<form id="myForm" action="/submitarticle/" method="post">
 			<div id="form_box">
-				<div>					
-					<ideahead>Title:</ideahead><br/><input type="text" name="title" size="60" placeholder="Article title"/>
+				<div>
+					<ideahead>
+						Title:
+					</ideahead>
+					<br/>
+					<input type="text" name="title" size="60" placeholder="Article title"/>
 				</div>
 				<div>
-					<ideahead>Url:</ideahead><br/><input type="text" size="60" name="url" placeholder="http://www.example.com/article.html"/>
+					<ideahead>
+						Url:
+					</ideahead>
+					<br/>
+					<input type="text" size="60" name="url" placeholder="http://www.example.com/article.html"/>
 				</div>
-				<div>										
-					<ideahead>Tags:</ideahead><br/><input type="text" name="tags" size="60" placeholder="research,innovation,business"/>
+				<div>
+					<ideahead>
+						Tags:
+					</ideahead>
+					<br/>
+					<input type="text" name="tags" size="60" placeholder="research,innovation,business"/>
 					</br>
-					<font size="1">Tag article with comma separated list (e.g. mobile,finance,marketing)</font>
+					<font size="1">
+						Tag article with comma separated list (e.g. mobile,finance,marketing)
+					</font>
 				</div>
 				<input type="submit" name="button" id="submitter" />
-			<span class="clr"><!-- spanner --></span>
+				<span class="clr">
+					<!-- spanner -->
+				</span>
 			</div>
 		</form>
-		<a href="/accounts/logout/?next=/">logout</a>
-	{%else%}
-	To submit articles, you must <a href="/accounts/login/?next=/">login</a> or if you are a new user
-		
-		<a href="/accounts/register/">register</a>.
 
-	{%endif%}
-</body>
+		{%endif%}
+	</body>
 </html>
-
-
 
 {% endblock %}

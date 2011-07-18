@@ -184,10 +184,12 @@ def promote(request):
 	error_msg = u"No POST data sent."	
 	if request.method == "POST":
 		post = request.POST.copy()
+		print "promote ID: "+post['id']
 		if post.has_key('id') :
 			try:
 				iid = post['id']
 				ideas = Idea.objects(id=iid)
+				print "len: "+str(len(ideas))
 				if(len(ideas) >0):
 					idea = ideas[0]
 					idea.ispromoted = True
@@ -201,7 +203,8 @@ def promote(request):
 
 @login_required    
 def addcomment(request):
-	error_msg = u"No POST data sent."	
+	error_msg = u"No POST data sent."
+	print 'addcomment called'	
 	if request.method == "POST":
 		post = request.POST.copy()
 		if post.has_key('content') and post.has_key('id'):
@@ -262,6 +265,9 @@ def submitarticle(request):
 				art.author = str(request.user)
 				art.title = post['title']
 				art.votecount = 0
+				art.viewcount = 0
+				if not url.startswith('http://'):
+					url = 'http://'+url
 				art.url = url
 				if art.url and art.title and art.author:
 					try:

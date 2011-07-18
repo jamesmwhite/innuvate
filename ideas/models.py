@@ -28,6 +28,7 @@ class Article(Document):
 	author = StringField()
 	hasvoted = False
 	votecount = IntField()
+	viewcount = IntField()
 	voters = ListField(StringField())
 	reported = BooleanField(default=False) 
 	isvisible = BooleanField(default=True)

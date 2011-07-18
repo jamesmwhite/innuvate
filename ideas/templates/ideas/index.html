@@ -82,6 +82,12 @@
 					<li>
 						<a href="/tagcloud">Tag Cloud</a>
 					</li>
+					<li>
+						<a href="/tandc">Terms of Use</a>
+					</li>
+					<li>
+						<a href="/help">Help</a>
+					</li>
 					
 					{%if user.is_staff%}
 					<li>
@@ -90,13 +96,15 @@
 					<li>
 						<a href="/archive">Archive</a>
 					</li>
+					
 					{%endif%}
 					<!-- 					<li><a href="/reports">Reports</a></li> -->
 				</ul>
 			</div><!--2-->
 			<div align="right">
-				Copyright James White
+				This is OpenSource, contribute <a href="https://github.com/jamesmwhite/innuvate">here</a>
 			</div>
+			
 
 			{%if tabselected%}
 			<script>
@@ -105,7 +113,7 @@
 				});
 			</script>
 			{%endif%}
-			<!-- 				<a href="/logout">Logout</a>  -->
+
 		</div><!--1-->
 	</body>
 </html>

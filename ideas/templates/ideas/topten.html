@@ -121,8 +121,8 @@
 
 	<body>
 		{%if ideas%}
-		<canvas width="800" height="200" id="myCanvas">
-			Browser does not support html5 canvas
+		<canvas title="Tag Cloud: click a tag to filter by tag" width="800" height="200" id="myCanvas">
+			Browser does not support html5 canvas, time for a new browser!
 			{%for tag in tags%}
 			<li>
 				<a href="/tag/{{tag.tag}}/"  data-weight="{{tag.val}}">{{tag.tag}}</a>
@@ -143,16 +143,16 @@
 			<tr>
 				<td width=80%>
 				<a href="/idea/{{idea.id}}">
-				<ideatitle>
+				<ideatitle title="{{idea.content}}">
 					{{idea.title}}
 				</ideatitle>
 				</a>
 				<a href="/idea/{{idea.id}}">
 				<view>
-					View Idea
+					View&#8594;
 				</view>
 				</a>
-				</br>
+				<br/>
 				<normal>
 					By	{% if idea.author %}
 					{{ idea.author }}
@@ -160,15 +160,14 @@
 					{% endif %}, {{idea.date}}
 				</normal>
 				<a href="/report/{{idea.id}}">
-				<report>
+				<report title="Report idea if you feel content is inappropriate">
 					report
 				</report>
 				</a>
-
-				</br></br>
+				<br/>
 				{%for tag in idea.tags%}
 				<a href="/tag/{{tag}}/">
-				<tagsurround>
+				<tagsurround title="Click on tag to filter by this 'category'">
 					{{tag}}
 				</tagsurround>
 				</a> &nbsp;
@@ -176,7 +175,7 @@
 				</td>
 				<td>
 				<center>
-					<votecount>
+					<votecount title="Total number of times this idea has been viewed">
 						{{idea.viewcount}}
 					</votecount>
 					</br></br>
@@ -187,7 +186,7 @@
 				</td>
 				<td>
 				<center>
-					<votecount>
+					<votecount title="Total number of votes for this idea">
 						{{idea.votecount}}
 					</votecount>
 					</br></br>
@@ -201,14 +200,13 @@
 				<img src="/media/images/star.png"/>
 				{%else%}
 				<form action="/dostar/" method="post">
-					<div class="submitdiv">
-						<input type="hidden" name="id" value={{idea.id}}>
-						<input type="image" src="/media/images/empty_star.png" onmouseover="this.src='/media/images/star.png'" onmouseout="this.src='/media/images/empty_star.png'"  ALT="Submit Form"/>
-					</div>
+				<div class="submitdiv">
+				<input type="hidden" name="id" value={{idea.id}}>
+				<input type="image" src="/media/images/empty_star.png" onmouseover="this.src='/media/images/star.png'" onmouseout="this.src='/media/images/empty_star.png'"  ALT="Submit Form"/>
+				</div>
 				</form>
 				{%endif%}
 				</td> -->
-
 			</tr>
 		</table>
 
@@ -216,9 +214,10 @@
 		{%if user.is_staff%}
 		<form action="/promote/" method="post">
 			<div class="submitdiv">
-				<input type="hidden" name="id" value={{idea.id}}>
+				<input type="hidden" name="id" value="{{idea.id}}">
 				<input type="submit" value="Promote"/>
 			</div>
+			</form>
 			{%endif%}
 			<hr/>
 
@@ -226,7 +225,7 @@
 
 			{%else%}
 			No Ideas Submitted
-						<hr/>
+			<hr/>
 			{%endif%}
 
 			<h3>Submit New Idea</h3>
@@ -266,9 +265,17 @@
 			</form>
 			{%else%}
 			To submit ideas, you must
-			<a href="/accounts/login/?next=/">login</a> or if you are a new user
+			<a href="/accounts/login/?next=/">
+			<u>
+				login
+			</u>
+			</a> or if you are a new user
 
-			<a href="/accounts/register/">register</a>.
+			<a href="/accounts/register/">
+			<u>
+				register
+			</u>
+			</a>.
 
 			{%endif%}
 	</body>

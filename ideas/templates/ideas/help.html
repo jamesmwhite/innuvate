@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
+        </style>	
+        
+        <style>
+			#tabsu { height: 200px; width:400px} 
+			.tabs-bottom { position: relative; } 
+			.tabs-bottom .ui-tabs-panel { height: 200px; overflow: auto; width:400px} 
+			.tabs-bottom .ui-tabs-nav { position: absolute !important; left: 0; bottom: 0; right:0; padding: 0 0.2em 0.2em 0; } 
+			.tabs-bottom .ui-tabs-nav li { margin-top: -2px !important; margin-bottom: 1px !important; border-top: none; border-bottom-width: 1px; }
+			.ui-tabs-selected { margin-top: -3px !important; }
+		</style>
+        	
+		<script>
+			$(function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click(function() { return false; });
+			});
+
+			$(function() {
+				$( "#tabsu" ).tabs();
+				$( ".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *" )
+					.removeClass( "ui-corner-all ui-corner-top" )
+					.addClass( "ui-corner-bottom" );
+			});
+
+			$(function() {
+				$( "#accordion" ).accordion({										
+				});
+			});
+
+			$('myForm').addEvent('submit', function(e) {
+			new Event(e).stop();
+			var log = $('log_res').empty().addClass('ajax-loading');
+			this.send({
+				update: log,
+				onComplete: function() {
+					log.removeClass('ajax-loading');
+				}
+			});
+		});
+		</script>
+		
+</head>
+
+<body>  
+
+<h3>Help</h3>
+	<h4>Tagging</h4>
+	In online computer systems terminology, a tag is a non-hierarchical keyword or term assigned to a piece of information (such as an Internet bookmark, digital image, or computer file). This kind of metadata helps describe an item and allows it to be found again by browsing or searching. Tags are generally chosen informally and personally by the item's creator or by its viewer, depending on the system.
+	<h4>Voting</h4>
+	You can vote on an idea once, the vote is between 1-5 with one meaning you do not like the idea and 5 meaning you love the idea.
+	<h4>Where is my idea?</h4>
+	If you can no longer see your idea, it may have been reported and removed from site, please contact admin to find out
+	
+
+</body>
+</html>
+
+
+
+{% endblock %}

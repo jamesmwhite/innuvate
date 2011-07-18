@@ -23,7 +23,7 @@
 <body>
 
 
-<h3 class="ui-widget-header ui-corner-all">Archive</h3>
+<h3>Archive</h3>
 	{%if ideas%}
 		<div id="accordions"><!--5-->							
 			{% for idea in ideas %}							
@@ -63,12 +63,8 @@
 			</br>
 			<font size="1"> Added: {{idea.date}}</font>	
 			</br>
-			{%if user.is_staff%}
-			<form action="/promote/" method="post">
-							<div class="submitdiv">
-								<input type="hidden" name="id" value={{idea.id}}>
-								<input type="submit" value="Promote"/>
-			{%endif%}
+
+			
 			<hr/>
 			
 			

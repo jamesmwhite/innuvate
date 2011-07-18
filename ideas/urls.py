@@ -37,4 +37,8 @@ urlpatterns = patterns(
      'ideas.articles.go'),
 	 (r'^manage$',
      'ideas.manage.go'),
+	 (r'^tandc$',
+     'ideas.tandc.go'),
+	(r'^help$',
+     'ideas.help.go'),
 )

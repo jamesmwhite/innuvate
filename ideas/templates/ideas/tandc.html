@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; color:#1c94c4 }
+        </style>	
+        
+        <style>
+			#tabsu { height: 200px; width:400px} 
+			.tabs-bottom { position: relative; } 
+			.tabs-bottom .ui-tabs-panel { height: 200px; overflow: auto; width:400px} 
+			.tabs-bottom .ui-tabs-nav { position: absolute !important; left: 0; bottom: 0; right:0; padding: 0 0.2em 0.2em 0; } 
+			.tabs-bottom .ui-tabs-nav li { margin-top: -2px !important; margin-bottom: 1px !important; border-top: none; border-bottom-width: 1px; }
+			.ui-tabs-selected { margin-top: -3px !important; }
+		</style>
+        	
+		<script>
+			$(function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click(function() { return false; });
+			});
+
+			$(function() {
+				$( "#tabsu" ).tabs();
+				$( ".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *" )
+					.removeClass( "ui-corner-all ui-corner-top" )
+					.addClass( "ui-corner-bottom" );
+			});
+
+			$(function() {
+				$( "#accordion" ).accordion({										
+				});
+			});
+
+			$('myForm').addEvent('submit', function(e) {
+			new Event(e).stop();
+			var log = $('log_res').empty().addClass('ajax-loading');
+			this.send({
+				update: log,
+				onComplete: function() {
+					log.removeClass('ajax-loading');
+				}
+			});
+		});
+		</script>
+		
+</head>
+
+<body>  
+
+<h3>Terms of Use</h3>
+	1. The user is responsible for all content they post</br>
+	2. Use of profanity or any abusive content may lead to revoking of access rights</br>
+	3. All ideas may be used by owner of site</br>
+	
+
+</body>
+</html>
+
+
+
+{% endblock %}
