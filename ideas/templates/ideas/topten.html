@@ -167,32 +167,19 @@
 				<br/>
 				{%for tag in idea.tags%}
 				<a href="/tag/{{tag}}/">
-				<tagsurround title="Click on tag to filter by this 'category'">
-					{{tag}}
-				</tagsurround>
+				<tagsurround title="Click on tag to filter by this 'category'">{{tag}}</tagsurround>
 				</a> &nbsp;
 				{%endfor%}
 				</td>
-				<td>
-				<center>
-					<votecount title="Total number of times this idea has been viewed">
-						{{idea.viewcount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Views
-					</labels>
+				<td align="center">
+				<center><votecount title="Total number of times this idea has been viewed">{{idea.viewcount}}</votecount><br/><br/>
+					<labels>Views</labels>
 				</center>
 				</td>
-				<td>
+				<td align="center">
 				<center>
-					<votecount title="Total number of votes for this idea">
-						{{idea.votecount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Votes
-					</labels>
+					<votecount title="Total number of votes for this idea">{{idea.votecount}}</votecount><br/><br/>
+					<labels>Votes</labels>
 				</center>
 				</td>
 				<!-- <td>

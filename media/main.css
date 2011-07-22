@@ -62,14 +62,15 @@ votecount {
 	color:#FFFFFF;
 	font-weight: normal;
 	background-color: #492AA3;
-	padding: 5px;
+	text-align: center;
+	padding: 8px;
 	border: 1px solid black;
 }
 
 
 tagsurround {
 	font-size:11px;
-	color:black;
+	color:white;
 	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
 	font-weight: normal;
 	text-decoration: none;

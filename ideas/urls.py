@@ -7,7 +7,6 @@ from mongoengine import *
 
 urlpatterns = patterns(
     '',
-    (r'^create/$','ideas.views.create_idea'),
     (r'^tag/.+/$','ideas.idea_main.go'),
     (r'^report/.+/$','ideas.views.report'),
 	(r'^reportarticle/.+/$','ideas.views.reportarticle'),
