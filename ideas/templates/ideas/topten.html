@@ -123,7 +123,7 @@
 		{%if ideas%}
 		<canvas title="Tag Cloud: click a tag to filter by tag" width="800" height="200" id="myCanvas">
 			Browser does not support html5 canvas, time for a new browser! 
-			May I suggest chrome? <a href="http://www.google.com/chrome/">http://www.google.com/chrome/</a>
+			May I suggest chrome? 
 			{%for tag in tags%}
 			<li>
 				<a href="/tag/{{tag.tag}}/"  data-weight="{{tag.val}}">{{tag.tag}}</a>
