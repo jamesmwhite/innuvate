@@ -38,6 +38,7 @@ class Idea(Document):
 	author = StringField(required=True)
 	content = StringField(required=True)	
 	title = StringField(required=True)
+	email = StringField(default="")
 	votecount = IntField()
 	groupKey = StringField()	
 	voters = ListField(StringField())

@@ -5,7 +5,9 @@ import traceback
 from django.core.signals import got_request_exception
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.core.mail import send_mail
+import threading
+import datetime
 
 
 
@@ -218,6 +220,11 @@ def addcomment(request):
 					comment.author = str(request.user)
 					idea.comments.append(comment)
 					idea.save()
+					try:
+						t = ThreadClass(comment.author+' has commented on your idea: '+idea.title, comment.author+' commented: '+comment.content,[idea.email])
+						t.start()					
+					except Exception as inst:
+						print 'exception sending email '+str(inst)
 				return HttpResponseRedirect('/')
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
@@ -236,6 +243,8 @@ def submitidea(request):
 				idea = Idea()
 				idea.tags = post['tags'].strip().split(',')
 				idea.author = str(request.user)
+				print "user: "+str(request.user)
+				idea.email = str(request.user.email)
 				idea.title = post['title']
 				idea.votecount = 0
 				idea.viewcount = 0
@@ -308,3 +317,22 @@ def update_idea(request, slug):
         return HttpResponseRedirect(idea.get_absolute_url())
     error_msg = u"No POST data sent."
     return HttpResponseServerError(error_msg)
+   
+   
+
+        
+class ThreadClass(threading.Thread):
+	body = ''
+	to = ''
+	subject = ''
+	def __init__(self,subject,body,to):
+		threading.Thread.__init__(self)
+		self.subject = subject
+		self.body = body
+		self.to = to
+	def run(self):
+		#print 'emailing: '+self.subject+' '+self.body+' '+str(self.to)
+		try:
+			send_mail(subject, body, 'update@donotreply.com',[to], fail_silently=False)
+		except:
+			print 'error sending mail in thread'
