@@ -207,10 +207,11 @@ def promote(request):
 					idea.ispromoted = True
 					idea.save()
 					try:
-						t = ThreadClass("Idea Promoted", "Your idea '"+idea.title+"' has been promoted and will now go forward for idea selection, it may or may not be chosen for implementation.",[idea.email]+"'")
+						t = ThreadClass("Idea Promoted", "Your idea '"+str(idea.title)+"' has been promoted and will now go forward for idea selection, it may or may not be chosen for implementation.",[idea.email])
 						t.start()					
 					except Exception as inst:
 						print 'exception sending email '+str(inst)
+						traceback.print_exc()
 				return HttpResponseRedirect('/')
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
@@ -236,7 +237,7 @@ def addcomment(request):
 					idea.comments.append(comment)
 					idea.save()
 					try:
-						t = ThreadClass(comment.author+" has commented on your idea: '"+idea.title+"'", comment.author+" commented: '"+comment.content,[idea.email]+"'")
+						t = ThreadClass(comment.author+" has commented on your idea: '"+idea.title+"'", comment.author+" commented: '"+comment.content+"'",[idea.email])
 						t.start()					
 					except Exception as inst:
 						print 'exception sending email '+str(inst)
