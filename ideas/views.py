@@ -333,6 +333,6 @@ class ThreadClass(threading.Thread):
 	def run(self):
 		#print 'emailing: '+self.subject+' '+self.body+' '+str(self.to)
 		try:
-			send_mail(subject, body, 'update@donotreply.com',[to], fail_silently=False)
+			send_mail(self.subject, self.body, 'update@donotreply.com',[self.to], fail_silently=False)
 		except Exception as excep:
 			print 'error sending mail in thread '+str(excep)
