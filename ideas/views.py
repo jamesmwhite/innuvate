@@ -1,5 +1,5 @@
 from mongoengine import *
-from models import Idea,Comment,Article,Person,Score,Stat
+from models import Idea,Comment,Article,Person,Score,Stat,Rating
 from django.http import HttpResponseRedirect, HttpResponseServerError
 import traceback
 from django.core.signals import got_request_exception
@@ -41,6 +41,12 @@ def report(request):
 		idea = ideas[0]
 		idea.reported = True
 		incrementStat('ideasreported',1)
+		person = getPerson(request)
+		if person:
+			person.timesReport = person.timesReport +1
+			rating = Score.objects(type='report')[0].value
+			person.currentRating = person.currentRating + rating
+			person.save()
 		idea.save()
 	return HttpResponseRedirect('/')
 
@@ -53,6 +59,12 @@ def reportarticle(request):
 		art = articles[0]
 		art.reported = True
 		incrementStat('articlesreported',1)
+		person = getPerson(request)
+		if person:
+			person.timesReport = person.timesReport +1
+			rating = Score.objects(type='report')[0].value
+			person.currentRating = person.currentRating + rating
+			person.save()
 		art.save()
 	return HttpResponseRedirect('/')
 	
@@ -164,6 +176,13 @@ def vote(request):
 					idea.voters.append(str(request.user))
 					incrementStat('unique_idea_votes',1)
 					incrementStat('total_idea_vote_count',voteval)
+					person = getPerson(request)
+					if person:
+						person.lastActive = datetime.datetime.now()
+						rating = Score.objects(type='vote')[0].value
+						person.currentRating = person.currentRating + rating
+						person.timesVoted = person.timesVoted + 1
+						person.save()
 					idea.save()
 					try:
 						t = ThreadClass("Idea voted on", "Your idea '"+idea.title +"' has been given a voting of "+str(voteval)+".",[idea.email])
@@ -214,6 +233,13 @@ def promote(request):
 					idea = ideas[0]
 					idea.ispromoted = True
 					incrementStat('promotions',1)
+					people = Person.objects(email=idea.email)
+					if people and len(people)>0:
+						person = people[0]
+						person.timesPromoted = person.timesPromoted +1
+						rating = Score.objects(type='promotion')[0].value
+						person.currentRating = person.currentRating + rating
+						person.save()
 					idea.save()
 					try:
 						t = ThreadClass("Idea Promoted", "Your idea '"+str(idea.title)+"' has been promoted and will now go forward for idea selection, it may or may not be chosen for implementation.",[idea.email])
@@ -242,9 +268,18 @@ def addcomment(request):
 					idea = ideas[0]
 					comment = Comment()
 					comment.content = post['content']
+					if not comment.content or comment.content.strip()=="":
+						return HttpResponseRedirect('/')
 					comment.author = str(request.user)
 					idea.comments.append(comment)
 					incrementStat('comments',1)
+					person = getPerson(request)
+					if person:
+						person.lastActive = datetime.datetime.now()
+						person.timesCommented = person.timesCommented + 1
+						rating = Score.objects(type='comment')[0].value
+						person.currentRating = person.currentRating + rating
+						person.save()
 					idea.save()
 					try:
 						t = ThreadClass(comment.author+" has commented on your idea: '"+idea.title+"'", comment.author+" commented: '"+comment.content+"'",[idea.email])
@@ -255,7 +290,10 @@ def addcomment(request):
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
 		else:
-			error_msg = u"Insufficient POST data (need 'slug' and 'title'!)"
+			print 'didnt comment, no data'
+			return HttpResponseRedirect('/')
+#			error_msg = u"Insufficient POST data (need 'slug' and 'title'!)"
+
 	return HttpResponseServerError(error_msg)
  
 @login_required    
@@ -362,12 +400,14 @@ class ThreadClass(threading.Thread):
 		except Exception as excep:
 			print 'error sending mail in thread '+str(excep)
 			
+@login_required			
 def getPerson(request):
 	people = Person.objects(email=str(request.user.email))
 	if people and len(people)>0:
 		person = people[0]
 		return person
 	
+@login_required	
 def initialiseScoring(request):
 	score = Score.objects(type='submitidea')
 	if not score:
@@ -410,4 +450,94 @@ def initialiseScoring(request):
 		score.type='view'
 		score.value=10
 		score.save()
+	
+	score = Score.objects(type='promotion')
+	if not score:
+		score = Score()
+		score.type='promotion'
+		score.value=80
+		score.save()
+		
+	initialiseRatings()
 	return HttpResponseRedirect('/')
+
+def initialiseRatings():
+	rating = Rating.objects(name='Squire')
+	if not rating:
+		rating = Rating()
+		rating.score = 0
+		rating.name = 'Squire'
+		rating.image = '/media/images/squire.png'
+		rating.save()
+	
+	rating = Rating.objects(name='Baron')
+	if not rating:
+		rating = Rating()
+		rating.score = 1000
+		rating.name = 'Baron'
+		rating.image = '/media/images/baron.png'
+		rating.save()
+	
+	rating = Rating.objects(name='Count')
+	if not rating:
+		rating = Rating()
+		rating.score = 1500
+		rating.name = 'Count'
+		rating.image = '/media/images/count.png'
+		rating.save()
+		
+	rating = Rating.objects(name='Duke')
+	if not rating:
+		rating = Rating()
+		rating.score = 3000
+		rating.name = 'Duke'
+		rating.image = '/media/images/duke.png'
+		rating.save()
+		
+	rating = Rating.objects(name='Prince')
+	if not rating:
+		rating = Rating()
+		rating.score = 5000
+		rating.name = 'Prince'
+		rating.image = '/media/images/prince.png'
+		rating.save()
+		
+	rating = Rating.objects(name='Archduke')
+	if not rating:
+		rating = Rating()
+		rating.score = 6000
+		rating.name = 'Archduke'
+		rating.image = '/media/images/archduke.png'
+		rating.save()
+		
+	rating = Rating.objects(name='Grand Duke')
+	if not rating:
+		rating = Rating()
+		rating.score = 7000
+		rating.name = 'Grand Duke'
+		rating.image = '/media/images/grandduke.png'
+		rating.save()
+		
+	rating = Rating.objects(name='Viceroy')
+	if not rating:
+		rating = Rating()
+		rating.score = 8000
+		rating.name = 'Viceroy'
+		rating.image = '/media/images/viceroy.png'
+		rating.save()
+		
+	rating = Rating.objects(name='King')
+	if not rating:
+		rating = Rating()
+		rating.score = 9000
+		rating.name = 'King'
+		rating.image = '/media/images/king.png'
+		rating.save()
+		
+	rating = Rating.objects(name='Emperor')
+	if not rating:
+		rating = Rating()
+		rating.score = 10000
+		rating.name = 'Emperor'
+		rating.image = '/media/images/emperor.png'
+		rating.save()

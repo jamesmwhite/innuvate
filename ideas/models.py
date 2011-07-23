@@ -89,6 +89,7 @@ class Person(Document):
 	name = StringField(required=True)
 	email = StringField(required=True)
 	timesVoted = IntField(default=0)
+	articlesVoted = IntField(default=0)
 	timesViewed = IntField(default=0)
 	timesCommented = IntField(default=0)
 	timesIdea = IntField(default=0)
@@ -109,7 +110,7 @@ class Stat(Document):
 class Rating(Document):
 	score = IntField(default=0)
 	name = StringField(required=True)
-	image = StringField(required=True)
+	image = StringField(required=True,default='default_avatar.jpg')
 	
 class Score(Document):
 	type =  StringField(required=True)

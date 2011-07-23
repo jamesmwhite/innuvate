@@ -7,13 +7,10 @@
 <body>  
 
 <h3>My Stats</h3>
-	<h4>Current</h4>
+
 	{%if person%}
 	<table>
-		<tr>
-			<td>Item</td>
-			<td>Value</td>
-		</tr>
+		
 		<tr>
 			<td>Name</td>
 			<td>{{person.name}}</td>
@@ -35,8 +32,8 @@
 			<td>{{person.timesVoted}}</td>
 		</tr>
 		<tr>
-			<td>Article Views</td>
-			<td>{{person.timeViewed}}</td>
+			<td>Idea Views</td>
+			<td>{{person.timesViewed}}</td>
 		</tr>
 		<tr>
 			<td>Ideas Submitted</td>
@@ -46,16 +43,16 @@
 			<td>Articles Submitted</td>
 			<td>{{person.timesArticle}}</td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td>Times Reported</td>
 			<td>{{person.timesReported}}</td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td>Reports Made</td>
 			<td>{{person.timesReport}}</td>
 		</tr>
 		<tr>
-			<td>Idea Promoted</td>
+			<td>Ideas Promoted</td>
 			<td>{{person.timesPromoted}}</td>
 		</tr>
 		<tr>

@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 import cgi
 from operator import itemgetter
 import os
-from models import Idea
+from models import Idea,Score
 import views
 from mongoengine import *
 from django.http import HttpResponseRedirect, HttpResponseServerError
@@ -40,6 +40,12 @@ def go(request):
 		else:
 			vc = vc + 1
 		idea.viewcount = vc
+		person = views.getPerson(request)
+		if person:
+			person.timesViewed = person.timesViewed + 1
+			rating = Score.objects(type='view')[0].value
+			person.currentRating = person.currentRating + rating
+			person.save()
 		idea.save()
 
 	template_values = {

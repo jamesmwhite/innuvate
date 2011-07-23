@@ -81,9 +81,9 @@
 		
 		
 		
-		<center><font size="7"><pre id="threed-example">-- innUvate --</pre></font></center>
+		<center><font size="7"><pre id="threed-example">-- innUvate<font size="1px">(beta)</font> --</pre></font></center>
 		{%if user.is_authenticated%}
-		Welcome {{user}} (
+		Welcome {{user}} - {{rating.name}} <img src="{{rating.image}}" width="30px" height="30px"/> (
 		<a href="/accounts/logout/?next=/">logout</a>)
 		{%else%}
 		Welcome Guest (

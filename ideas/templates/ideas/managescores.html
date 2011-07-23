@@ -26,6 +26,13 @@
 			{{score.type}} = {{score.value}}<br/>
 			
 			{%endfor%}
+			
+			<h1>Ratings</h1>
+			{%for rating in ratings%}
+			<img src="{{rating.image}}" width="50px" height="50px"/> {{rating.name}} = {{rating.score}}	<br/>
+			
+			{%endfor%}
+			
 			<p>If no scores are displayed, you may have to <a href="/initialiseScores"><u>Initialise Scoring System</u></a></p>
 			
 	</head>
