@@ -32,6 +32,8 @@ urlpatterns = patterns(
      'ideas.tagcloud.go'),
      (r'^allideas$',
      'ideas.allideas.go'),
+	(r'^newideas$',
+     'ideas.newideas.go'),
      (r'^articles$',
      'ideas.articles.go'),
 	 (r'^manage$',
