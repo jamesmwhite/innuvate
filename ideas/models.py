@@ -84,3 +84,35 @@ class ThreadAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     search_fields = ["title", "creator"]
     list_display = ["title", "thread", "creator", "created"]
+    
+class Person(Document):
+	name = StringField(required=True)
+	email = StringField(required=True)
+	timesVoted = IntField(default=0)
+	timesViewed = IntField(default=0)
+	timesCommented = IntField(default=0)
+	timesIdea = IntField(default=0)
+	timesArticle = IntField(default=0)
+	timesReported = IntField(default=0)
+	timesReport = IntField(default=0)
+	timesPromoted = IntField(default=0)
+	timesImplemented = IntField(default=0)
+	lastActive = DateTimeField(default=datetime.datetime.now)
+	isBanned = BooleanField(default=False) 
+	currentRating = IntField(default=0)
+	activationdate = DateTimeField(default=datetime.datetime.now)
+
+class Stat(Document):
+	name = StringField(required=True)
+	total = IntField(default=0)
+	
+class Rating(Document):
+	score = IntField(default=0)
+	name = StringField(required=True)
+	image = StringField(required=True)
+	
+class Score(Document):
+	type =  StringField(required=True)
+	value = IntField(default=0)
+	
+	

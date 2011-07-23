@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+	<head>
+		<style type="text/css">
+			body, html {
+				font-family:helvetica,arial,sans-serif;
+				font-size:90%;
+				color:#1c94c4
+			}
+		</style>
+
+	
+
+		<script>
+			$( function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click( function() {
+					return false;
+				});
+			});
+			</script>
+			
+			
+	</head>
+
+	<body>
+		<h1>Work in progress</h1>
+		
+		Ideas
+		<table border=1>
+			<tr>
+				<td>Title</td>
+				<td>Author</td>
+				<td>Date</td>
+				<td>Votes</td>
+				<td>Views</td>
+				<td>Comments</td>
+			</tr>
+		{%for idea in ideas%}
+		<tr>
+			<td>{{idea.title}}</td>
+			<td>{{idea.author}}</td>
+			<td>{{idea.date}}</td>
+			<td>{{idea.votecount}}</td>
+			<td>{{idea.viewcount}}</td>
+			<td>-</td>
+		</tr>
+		{%endfor%}
+		</table>
+		
+		Articles
+		<table border=1>
+			<tr>
+				<td>Title</td>
+				<td>Author</td>
+				<td>Date</td>
+				<td>Votes</td>
+				<td>Views</td>
+				<td>Comments</td>
+			</tr>
+		{%for item in articles%}
+		<tr>
+			<td>{{item.title}}</td>
+			<td>{{item.author}}</td>
+			<td>{{item.date}}</td>
+			<td>{{item.votecount}}</td>
+			<td>{{item.viewcount}}</td>
+			<td>-</td>
+		</tr>
+		{%endfor%}
+		</table>
+	</body>
+</html>
+
+{% endblock %}

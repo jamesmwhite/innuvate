@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+</head>
+
+<body>  
+
+<h3>My Stats</h3>
+	<h4>Current</h4>
+	{%if person%}
+	<table>
+		<tr>
+			<td>Item</td>
+			<td>Value</td>
+		</tr>
+		<tr>
+			<td>Name</td>
+			<td>{{person.name}}</td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td>{{person.email}}</td>
+		</tr>
+		<tr>
+			<td>Rating</td>
+			<td>{{person.currentRating}}</td>
+		</tr>
+		<tr>
+			<td>Comments</td>
+			<td>{{person.timesCommented}}</td>
+		</tr>
+		<tr>
+			<td>Times Voted</td>
+			<td>{{person.timesVoted}}</td>
+		</tr>
+		<tr>
+			<td>Article Views</td>
+			<td>{{person.timeViewed}}</td>
+		</tr>
+		<tr>
+			<td>Ideas Submitted</td>
+			<td>{{person.timesIdea}}</td>
+		</tr>
+		<tr>
+			<td>Articles Submitted</td>
+			<td>{{person.timesArticle}}</td>
+		</tr>
+		<tr>
+			<td>Times Reported</td>
+			<td>{{person.timesReported}}</td>
+		</tr>
+		<tr>
+			<td>Reports Made</td>
+			<td>{{person.timesReport}}</td>
+		</tr>
+		<tr>
+			<td>Idea Promoted</td>
+			<td>{{person.timesPromoted}}</td>
+		</tr>
+		<tr>
+			<td>Ideas Implemented</td>
+			<td>{{person.timesImplemented}}</td>
+		</tr>
+	</table>
+	
+	
+	
+	{%endif%}
+</body>
+</html>
+
+{% endblock %}

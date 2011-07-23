@@ -3,6 +3,7 @@ import cgi
 from operator import itemgetter
 import os
 from models import Idea
+import views
 from mongoengine import *
 from django.http import HttpResponseRedirect, HttpResponseServerError
 import random
@@ -14,6 +15,7 @@ class tagclass:
 
 def go(request):
 	
+	views.incrementStat('ideaviews',1)
 	pathinfo = request.META['PATH_INFO']
 	pathinfo = pathinfo[10:]
 	pathinfo = pathinfo.replace('/','')

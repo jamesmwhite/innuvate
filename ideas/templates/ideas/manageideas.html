@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+	<head>
+		<style type="text/css">
+			body, html {
+				font-family:helvetica,arial,sans-serif;
+				font-size:90%;
+				color:#1c94c4
+			}
+		</style>
+
+	
+
+		<script>
+			$( function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click( function() {
+					return false;
+				});
+			});
+			</script>
+			
+			
+	</head>
+
+	<body>
+		
+		
+		{%if promoted%}
+		<h3>Promoted Ideas</h3>
+		{%else%}
+		<p>No ideas promoted</p>
+		{%endif%}
+		{%for prom in promoted%}
+		<table cellpadding="1" width="100%">
+			<tr>
+				<td width=80%>
+
+				<ideatitle>
+					{{prom.title}}
+				</ideatitle>
+				<br/>
+				{{prom.content}}
+				</br>
+				<normal>
+					By	{% if prom.author %}
+					{{ prom.author }}
+					{% else %}Anonymous
+					{% endif %}, {{prom.date}}
+				</normal>
+				<form action="/demote/" method="post">
+					<div class="submitdiv">
+						<input type="hidden" name="id" value={{prom.id}}>
+						<input type="submit" value="Demote"/>
+					</div>
+				</form>
+
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{prom.viewcount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Views
+					</labels>
+				</center>
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{prom.votecount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Votes
+					</labels>
+				</center>
+				</td>
+
+			</tr>
+		</table>
+		{%endfor%}
+
+		
+		{%if articles%}
+		<h3>Reported Articles</h3>
+		{%else%}
+		<p>No reported articles</p>
+		{%endif%}
+		{%for art in articles%}
+		<table cellpadding="1" width="100%">
+			<tr>
+				<td width=80%>
+
+				<ideatitle>
+					{{art.title}}
+				</ideatitle>
+				<br/>
+				{{art.url}}
+				<br/>
+				<normal>
+					By	{% if prom.author %}
+					{{ art.author }}
+					{% else %}Anonymous
+					{% endif %}, {{art.date}}
+				</normal>
+				<div class="submitdiv">
+					<form action="/unpublish/" method="post">
+						<div class="submitdiv">
+							<input type="hidden" name="id" value={{art.id}}>
+							<input type="hidden" name="type" value="article">
+							<input type="submit" value="Unpublish"/>
+					</form>
+					<form action="/approve/" method="post">
+						<input type="hidden" name="id" value={{art.id}}>
+						<input type="hidden" name="type" value="article">
+						<input type="submit" value="Unreport"/>
+
+					</form>
+				</div>
+
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{art.viewcount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Views
+					</labels>
+				</center>
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{art.votecount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Votes
+					</labels>
+				</center>
+				</td>
+
+			</tr>
+		</table>
+		<hr/>
+		{%endfor%}
+
+		{%if ideas%}
+		<h3>Reported Ideas</h3>
+		{%else%}
+		<p>No reported ideas</p>
+		{%endif%}
+		{%for idea in ideas%}
+		<table cellpadding="1" width="100%">
+			<tr>
+				<td width=80%>
+
+				<ideatitle>
+					{{idea.title}}
+				</ideatitle>
+				<br/>
+				{{idea.url}}
+				<br/>
+				<normal>
+					By	{% if idea.author %}
+					{{ idea.author }}
+					{% else %}Anonymous
+					{% endif %}, {{idea.date}}
+				</normal>
+				<div class="submitdiv">
+					<form action="/unpublish/" method="post">
+						<input type="hidden" name="id" value={{idea.id}}>
+						<input type="hidden" name="type" value="idea">
+						<input type="submit" value="Unpublish"/>
+					</form>
+					<form action="/approve/" method="post">
+						<input type="hidden" name="id" value={{idea.id}}>
+						<input type="hidden" name="type" value="idea">
+						<input type="submit" value="Unreport"/>
+					</form>
+				</div>
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{idea.viewcount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Views
+					</labels>
+				</center>
+				</td>
+				<td>
+				<center>
+					<votecount>
+						{{idea.votecount}}
+					</votecount>
+					</br></br>
+					<labels>
+						Votes
+					</labels>
+				</center>
+				</td>
+
+			</tr>
+		</table>
+		<hr/>
+		{%endfor%}
+	</body>
+</html>
+
+{% endblock %}

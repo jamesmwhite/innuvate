@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+	<head>
+		<style type="text/css">
+			body, html {
+				font-family:helvetica,arial,sans-serif;
+				font-size:90%;
+				color:#1c94c4
+			}
+		</style>
+
+	
+
+		<script>
+			$( function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click( function() {
+					return false;
+				});
+			});
+			</script>
+			
+			<h1>Scores</h1>
+			{%for score in scores%}
+			{{score.type}} = {{score.value}}<br/>
+			
+			{%endfor%}
+			<p>If no scores are displayed, you may have to <a href="/initialiseScores"><u>Initialise Scoring System</u></a></p>
+			
+	</head>
+
+	<body>
+		
+		
+	</body>
+</html>
+
+{% endblock %}

@@ -10,36 +10,7 @@
 			}
 		</style>
 
-		<style>
-			#tabsu {
-				height: 200px;
-				width:400px
-			}
-			.tabs-bottom {
-				position: relative;
-			}
-			.tabs-bottom .ui-tabs-panel {
-				height: 200px;
-				overflow: auto;
-				width:400px
-			}
-			.tabs-bottom .ui-tabs-nav {
-				position: absolute !important;
-				left: 0;
-				bottom: 0;
-				right:0;
-				padding: 0 0.2em 0.2em 0;
-			}
-			.tabs-bottom .ui-tabs-nav li {
-				margin-top: -2px !important;
-				margin-bottom: 1px !important;
-				border-top: none;
-				border-bottom-width: 1px;
-			}
-			.ui-tabs-selected {
-				margin-top: -3px !important;
-			}
-		</style>
+	
 
 		<script>
 			$( function() {
@@ -48,23 +19,17 @@
 					return false;
 				});
 			});
+			</script>
+			
+			
+		<script>
 			$( function() {
-				$( "#tabsu" ).tabs();
-				$( ".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *" )
-				.removeClass( "ui-corner-all ui-corner-top" )
-				.addClass( "ui-corner-bottom" );
-			});
-			$( function() {
-				$( "#accordion" ).accordion({
-				});
-			});
-			$('myForm').addEvent('submit', function(e) {
-				new Event(e).stop();
-				var log = $('log_res').empty().addClass('ajax-loading');
-				this.send({
-					update: log,
-					onComplete: function() {
-						log.removeClass('ajax-loading');
+				$( "#tabss" ).tabs({
+					ajaxOptions: {
+						error: function( xhr, status, index, anchor ) {
+							$( anchor.hash ).html(
+							"Loading...");
+						}
 					}
 				});
 			});
@@ -72,180 +37,29 @@
 	</head>
 
 	<body>
+		
+		
+		<div class="tabsclasss">
+			<div id="tabss">
+				<ul>
+					<li>
+						<a href="/manageideas">Ideas</a>
+					</li>
+					<li>
+						<a href="/managestats">Stats</a>
+					</li>
+					<li>
+						<a href="/managebulk">Bulk Edit</a>
+					</li>
+					<li>
+						<a href="/managescores">Manage Scores</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
 
-		<h3>Promoted Ideas</h3>
-		{%for prom in promoted%}
-		<table cellpadding="1" width="100%">
-			<tr>
-				<td width=80%>
-
-				<ideatitle>
-					{{prom.title}}
-				</ideatitle>
-				<br/>
-				{{prom.content}}
-				</br>
-				<normal>
-					By	{% if prom.author %}
-					{{ prom.author }}
-					{% else %}Anonymous
-					{% endif %}, {{prom.date}}
-				</normal>
-				<form action="/demote/" method="post">
-					<div class="submitdiv">
-						<input type="hidden" name="id" value={{prom.id}}>
-						<input type="submit" value="Demote"/>
-					</div>
-				</form>
-
-				</td>
-				<td>
-				<center>
-					<votecount>
-						{{prom.viewcount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Views
-					</labels>
-				</center>
-				</td>
-				<td>
-				<center>
-					<votecount>
-						{{prom.votecount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Votes
-					</labels>
-				</center>
-				</td>
-
-			</tr>
-		</table>
-		{%endfor%}
-
-		<h3>Reported Articles</h3>
-		{%for art in articles%}
-		<table cellpadding="1" width="100%">
-			<tr>
-				<td width=80%>
-
-				<ideatitle>
-					{{art.title}}
-				</ideatitle>
-				<br/>
-				{{art.url}}
-				<br/>
-				<normal>
-					By	{% if prom.author %}
-					{{ art.author }}
-					{% else %}Anonymous
-					{% endif %}, {{art.date}}
-				</normal>
-				<div class="submitdiv">
-					<form action="/unpublish/" method="post">
-						<div class="submitdiv">
-							<input type="hidden" name="id" value={{art.id}}>
-							<input type="hidden" name="type" value="article">
-							<input type="submit" value="Unpublish"/>
-					</form>
-					<form action="/approve/" method="post">
-						<input type="hidden" name="id" value={{art.id}}>
-						<input type="hidden" name="type" value="article">
-						<input type="submit" value="Unreport"/>
-
-					</form>
-				</div>
-
-				</td>
-				<td>
-				<center>
-					<votecount>
-						{{art.viewcount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Views
-					</labels>
-				</center>
-				</td>
-				<td>
-				<center>
-					<votecount>
-						{{art.votecount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Votes
-					</labels>
-				</center>
-				</td>
-
-			</tr>
-		</table>
-		<hr/>
-		{%endfor%}
-
-		<h3>Reported Ideas</h3>
-		{%for idea in ideas%}
-		<table cellpadding="1" width="100%">
-			<tr>
-				<td width=80%>
-
-				<ideatitle>
-					{{idea.title}}
-				</ideatitle>
-				<br/>
-				{{idea.url}}
-				<br/>
-				<normal>
-					By	{% if idea.author %}
-					{{ idea.author }}
-					{% else %}Anonymous
-					{% endif %}, {{idea.date}}
-				</normal>
-				<div class="submitdiv">
-					<form action="/unpublish/" method="post">
-						<input type="hidden" name="id" value={{idea.id}}>
-						<input type="hidden" name="type" value="idea">
-						<input type="submit" value="Unpublish"/>
-					</form>
-					<form action="/approve/" method="post">
-						<input type="hidden" name="id" value={{idea.id}}>
-						<input type="hidden" name="type" value="idea">
-						<input type="submit" value="Unreport"/>
-					</form>
-				</div>
-				</td>
-				<td>
-				<center>
-					<votecount>
-						{{idea.viewcount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Views
-					</labels>
-				</center>
-				</td>
-				<td>
-				<center>
-					<votecount>
-						{{idea.votecount}}
-					</votecount>
-					</br></br>
-					<labels>
-						Votes
-					</labels>
-				</center>
-				</td>
-
-			</tr>
-		</table>
-		<hr/>
-		{%endfor%}
+		
 	</body>
 </html>
 

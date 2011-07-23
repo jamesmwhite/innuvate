@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+	<head>
+		<style type="text/css">
+			body, html {
+				font-family:helvetica,arial,sans-serif;
+				font-size:90%;
+				color:#1c94c4
+			}
+		</style>
+
+	
+
+		<script>
+			$( function() {
+				$( "button, input:submit, a", ".submitdiv" ).button();
+				$( "a", ".submitdev" ).click( function() {
+					return false;
+				});
+			});
+			</script>
+	</head>
+
+	<body>
+		
+		<table border=1>
+			<tr>
+				<td><b>Stat</b></td>
+				<td><b>Total</b></td>
+			</tr>
+		{%for stat in stats%}
+		<tr>
+			<td>{{stat.name}}</td>
+			<td>{{stat.total}}</td>
+		</tr>
+		{%endfor%}
+		</table>
+	</body>
+</html>
+
+{% endblock %}
