@@ -160,7 +160,7 @@ def vote(request):
 					idea.voters.append(str(request.user))
 					idea.save()
 					try:
-						t = ThreadClass("Idea voted on", "Your idea '"+idea.title +"' has been given a voting of "+voteval+".",[idea.email]+"'")
+						t = ThreadClass("Idea voted on", "Your idea '"+idea.title +"' has been given a voting of "+str(voteval)+".",[idea.email])
 						t.start()					
 					except Exception as inst:
 						print 'exception sending email '+str(inst)
