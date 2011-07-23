@@ -40,12 +40,13 @@ def go(request):
 		else:
 			vc = vc + 1
 		idea.viewcount = vc
-		person = views.getPerson(request)
-		if person:
-			person.timesViewed = person.timesViewed + 1
-			rating = Score.objects(type='view')[0].value
-			person.currentRating = person.currentRating + rating
-			person.save()
+		if user.is_authenticated():
+			person = views.getPerson(request)
+			if person:
+				person.timesViewed = person.timesViewed + 1
+				rating = Score.objects(type='view')[0].value
+				person.currentRating = person.currentRating + rating
+				person.save()
 		idea.save()
 
 	template_values = {
