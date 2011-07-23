@@ -406,6 +406,7 @@ def getPerson(request):
 	if people and len(people)>0:
 		person = people[0]
 		return person
+	return None
 	
 @login_required	
 def initialiseScoring(request):

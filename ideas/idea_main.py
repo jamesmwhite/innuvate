@@ -2,7 +2,6 @@ from django.shortcuts import render_to_response
 import cgi
 import os
 from models import Idea,Rating,Person
-
 from mongoengine import *
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.contrib.auth.decorators import user_passes_test
@@ -26,14 +25,16 @@ def go(request):
  	user = request.user
  	
  	rating = None
- 	person = views.getPerson(request)
- 	if person:
- 		pratings = Rating.objects().order_by('score')
- 		if pratings and len(pratings)>=0:
- 			for prating in pratings:
- 				if person.currentRating > prating.score:
- 					rating = prating
- 					break
+ 	if user.is_authenticated():
+ 		print 'AAAA'
+	 	person = views.getPerson(request)
+	 	if person:
+	 		pratings = Rating.objects().order_by('score')
+	 		if pratings and len(pratings)>=0:
+	 			for prating in pratings:
+	 				if person.currentRating >= prating.score:
+	 					rating = prating
+	 					break
  		
  	
 	template_values = {
