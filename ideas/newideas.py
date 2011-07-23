@@ -11,7 +11,7 @@ def go(request):
 	user = request.user
 	
 	ideas = None
-	ideas = Idea.objects(Q(isvisible=True) & Q(ispromoted=False)).order_by('-date')
+	ideas = Idea.objects(Q(isvisible=True) & Q(ispromoted=False)).order_by('-date')[:20]
 	s_ideas = []
 	for idea in ideas:
 		s_ideas.append(idea)
