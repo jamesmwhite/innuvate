@@ -1,9 +1,43 @@
-<html>
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>innUvation Registration</h1>
+
+    <div>
+
+    <form action='.' method='POST'>{% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+
+            <div>
+
+            {% if field.errors %} {{ field.errors }} {% endif %}
+
+                {{field.label }}  {{ field }}
+
+            </div>
+
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+    </div>
+
+{% endblock %}
+<!--<html>
     <head>
         <title>Register</title>
     </head>
     <body>
         <h2>Register</h2>
+        {%for field in form%}
+        {{field.label}}
+        {%endfor%}
         <form action="/accounts/register/" method="POST">{% csrf_token %}
             <table>
             {{ form.as_table }}
@@ -14,3 +48,4 @@
         </form>
     </body>
 </html>
+-->
