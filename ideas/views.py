@@ -95,6 +95,11 @@ def unpublish(request):
 						idea = ideas[0]
 						idea.isvisible = False						
 						idea.save()
+						try:
+							t = ThreadClass("Idea Unpublished", "Your idea '"+idea.title +"' has been unpublished.",[idea.email]+"'")
+							t.start()					
+						except Exception as inst:
+							print 'exception sending email '+str(inst)
 				else:
 					articles = Article.objects(id=iid)
 					if(len(articles) >0):
@@ -154,6 +159,11 @@ def vote(request):
 					idea.votecount = idea.votecount + voteval
 					idea.voters.append(str(request.user))
 					idea.save()
+					try:
+						t = ThreadClass("Idea voted on", "Your idea '"+idea.title +"' has been given a voting of "+voteval+".",[idea.email]+"'")
+						t.start()					
+					except Exception as inst:
+						print 'exception sending email '+str(inst)
 				return HttpResponseRedirect('/')
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
@@ -196,6 +206,11 @@ def promote(request):
 					idea = ideas[0]
 					idea.ispromoted = True
 					idea.save()
+					try:
+						t = ThreadClass("Idea Promoted", "Your idea '"+idea.title+"' has been promoted and will now go forward for idea selection, it may or may not be chosen for implementation.",[idea.email]+"'")
+						t.start()					
+					except Exception as inst:
+						print 'exception sending email '+str(inst)
 				return HttpResponseRedirect('/')
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
@@ -221,7 +236,7 @@ def addcomment(request):
 					idea.comments.append(comment)
 					idea.save()
 					try:
-						t = ThreadClass(comment.author+' has commented on your idea: '+idea.title, comment.author+' commented: '+comment.content,[idea.email])
+						t = ThreadClass(comment.author+" has commented on your idea: '"+idea.title+"'", comment.author+" commented: '"+comment.content,[idea.email]+"'")
 						t.start()					
 					except Exception as inst:
 						print 'exception sending email '+str(inst)
@@ -333,6 +348,6 @@ class ThreadClass(threading.Thread):
 	def run(self):
 		#print 'emailing: '+self.subject+' '+self.body+' '+str(self.to)
 		try:
-			send_mail(self.subject, self.body, 'update@donotreply.com',[self.to], fail_silently=False)
+			send_mail(self.subject, self.body, 'innUvate@donotreply.com',self.to, fail_silently=False)
 		except Exception as excep:
 			print 'error sending mail in thread '+str(excep)
