@@ -26,7 +26,6 @@ def go(request):
  	
  	rating = None
  	if user.is_authenticated():
- 		print 'AAAA'
 	 	person = views.getPerson(request)
 	 	if person:
 	 		pratings = Rating.objects().order_by('score')
