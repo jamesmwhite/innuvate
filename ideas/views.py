@@ -543,7 +543,7 @@ def initialiseRatings():
 		rating.image = '/media/images/emperor.png'
 		rating.save()
 		
-def initIdeas():
+def initIdeas(request):
 	for i in range(100):
 		idea = Idea()
 		idea.title = "idea "+str(i)
