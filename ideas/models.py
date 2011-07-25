@@ -39,7 +39,7 @@ class Idea(Document):
 	content = StringField(required=True)	
 	title = StringField(required=True)
 	email = StringField(default="")
-	votecount = IntField()
+	votecount = IntField(default=0)
 	groupKey = StringField()	
 	voters = ListField(StringField())
 	hasvoted = False
@@ -49,7 +49,7 @@ class Idea(Document):
 	reported = BooleanField(default=False) 
 	isvisible = BooleanField(default=True)
 	ispromoted = BooleanField(default=False) 
-	viewcount = IntField() 
+	viewcount = IntField(default=0) 
 
 	@queryset_manager
 	def objects(doc_cls, queryset):
