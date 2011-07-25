@@ -545,7 +545,7 @@ def initialiseRatings():
 		
 def initIdeas():
 	for i in range(100):
-		idea = new Idea()
+		idea = Idea()
 		idea.title = "idea "+str(i)
 		idea.content = "This is a test Idea"
 		idea.author = "jimmy"
