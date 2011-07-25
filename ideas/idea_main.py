@@ -5,7 +5,7 @@ from models import Idea,Rating,Person
 from mongoengine import *
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.contrib.auth.decorators import user_passes_test
-import registration.urls
+#import registration.urls
 from django.contrib.auth.models import User
 from django.db import models
 import views

@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-
+from registration.views import register
+from ideas.registration.register import InnuvateRegistrationForm
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -8,17 +9,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
-    (r'^', include('innuvate.ideas.urls')),
-    # Examples:
-    # url(r'^$', 'innov9.views.home', name='home'),
-    # url(r'^innov9/', include('innov9.foo.urls')),
+	(r'^', include('innuvate.ideas.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
-    # (r'^accounts/login/$',  login),
+	url(r'^admin/', include(admin.site.urls)),
+	# (r'^accounts/login/$',  login),
 	#(r'^accounts/logout/$', logout),
+	url(r'^accounts/profile/$', 'ideas.idea_main.go'),
+	
+	url(r'^accounts/register/$',register,{'form_class' : InnuvateRegistrationForm},name='registration_register'),
 	(r'^accounts/', include('registration.urls')),
 )

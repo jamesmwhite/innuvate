@@ -9,19 +9,23 @@
     <form action='.' method='POST'>{% csrf_token %}
 
         {{ form.non_field_errors }}
-
+	<table>
         {% for field in form %}
-
+	
             <div>
 
             {% if field.errors %} {{ field.errors }} {% endif %}
+            <tr>
+				<td>{{field.label }}</td>
+				<td>{{ field }}</td>
+			</tr>
 
-                {{field.label }}  {{ field }}
+                  
 
             </div>
 
         {% endfor %}
-
+</table>
         <input type="submit" value="Submit">
 
     </form>

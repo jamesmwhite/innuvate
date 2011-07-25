@@ -1,31 +1,36 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-{% if error_message %}
-{{ error_message }}
-{% endif %}
-<h1>Log In</h1>
-<div id="content-main">
-<p>Please enter username and password</p>
-    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
-  <div class="form-row">
-    <label for="id_username">Username:</label>
-        <input type="text" name="username" id="id_username" />
-  </div>
-  <div class="form-row">
-    <label for="id_password">Password:</label>
-        <input type="password" name="password" id="id_password" />
-    <input type="hidden" name="this_is_the_login_form" value="1" />
-  </div>
-  <div class="submit-row">
-    <label>&nbsp;</label><input type="submit" value="Log in" />
-  </div>
-</form>
-{{ error_message }}
 
-<script type="text/javascript">
-document.getElementById('id_username').focus()
-</script>
-</div>
+    <h1>innUvation Login</h1>
+    <p>Remember, your email address is not your username</p>
+
+    <div>
+
+    <form action='.' method='POST'>{% csrf_token %}
+
+        {{ form.non_field_errors }}
+	<table>
+        {% for field in form %}
+	
+            <div>
+
+            {% if field.errors %} {{ field.errors }} {% endif %}
+            <tr>
+				<td>{{field.label }}</td>
+				<td>{{ field }}</td>
+			</tr>
+
+                  
+
+            </div>
+
+        {% endfor %}
+</table>
+        <input type="submit" value="Submit">
+
+    </form>
+
+    </div>
+
 {% endblock %}

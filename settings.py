@@ -13,6 +13,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+EMAIL_END = "@gmail.com"
+
 # MONGODB SETTINGS 
 connect('innovation')
 # AUTHENTICATION_BACKENDS = (
