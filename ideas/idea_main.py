@@ -26,8 +26,22 @@ def go(request):
  	
  	rating = None
  	if user.is_authenticated():
-	 	person = views.getPerson(request)
+		
+		person = views.getPerson(request)
 	 	if person:
+	 		pratings = Rating.objects().order_by('score')
+	 		if pratings and len(pratings)>=0:
+	 			for prating in pratings:
+	 				if person.currentRating >= prating.score:
+	 					rating = prating
+	 					break
+	 	else:
+			person = Person()
+			person.email = user.email
+			person.name = str(user)
+			person.activationdate = datetime.datetime.now()
+			person.save()
+			views.incrementStat('users',1)
 	 		pratings = Rating.objects().order_by('score')
 	 		if pratings and len(pratings)>=0:
 	 			for prating in pratings:

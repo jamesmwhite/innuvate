@@ -16,16 +16,7 @@ class tagclass:
 
 def go(request):
 	user = request.user
-	print user.is_authenticated()
-	if user.is_authenticated():
-		people = Person.objects(email=user.email)
-		if not people or len(people)<=0:
-			person = Person()
-			person.email = user.email
-			person.name = str(user)
-			person.activationdate = datetime.datetime.now()
-			person.save()
-			views.incrementStat('users',1)
+	
 	filtertag =  request.META['HTTP_REFERER']
 	showtag = False
 	tabselected=None
