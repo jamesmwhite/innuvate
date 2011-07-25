@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.db import models
 import views
+import datetime
 
 #@user_passes_test(lambda u: u.has_perm('polls.can_vote'))
 def go(request):
