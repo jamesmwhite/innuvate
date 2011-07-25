@@ -550,3 +550,4 @@ def initIdeas(request):
 		idea.content = "This is a test Idea"
 		idea.author = "jimmy"
 		idea.save()
+	return HttpResponseRedirect('/')

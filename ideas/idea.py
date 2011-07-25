@@ -12,6 +12,21 @@ class tagclass:
 	tag = ''
 	val = ''
 	color = ''
+	
+class ThreadClass(threading.Thread):
+	def __init__(self,request):
+		threading.Thread.__init__(self)
+		self.request = request
+	def run(self):
+		try:
+			person = views.getPerson(self.request)
+			if person:
+				person.timesViewed = person.timesViewed + 1
+				rating = Score.objects(type='view')[0].value
+				person.currentRating = person.currentRating + rating
+				person.save()
+		except Exception as excep:
+			print 'error updating ratings in thread '+str(excep)
 
 def go(request):
 	
@@ -40,15 +55,15 @@ def go(request):
 		else:
 			vc = vc + 1
 		idea.viewcount = vc
-		if user.is_authenticated():
-			person = views.getPerson(request)
-			if person:
-				person.timesViewed = person.timesViewed + 1
-				rating = Score.objects(type='view')[0].value
-				person.currentRating = person.currentRating + rating
-				person.save()
 		idea.save()
-
+		
+		if user.is_authenticated():
+			try:
+				t = ThreadClass(request)
+				t.start()					
+			except Exception as inst:
+				print 'exception updating view rating '+str(inst)
+		
 	template_values = {
 		'idea': idea,
 		'user' : user,
@@ -56,3 +71,5 @@ def go(request):
 
 	path = os.path.join(os.path.dirname(__file__), 'templates/ideas/idea.html')
 	return render_to_response(path, template_values)
+
+
