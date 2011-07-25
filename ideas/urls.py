@@ -53,5 +53,7 @@ urlpatterns = patterns(
     (r'^mystats$',
      'ideas.mystats.go'),
 	(r'^initialiseScores',
-     'ideas.views.initialiseScoring'),									
+     'ideas.views.initialiseScoring'),
+	(r'^initIdeas',
+     'ideas.views.initIdeas'),									
 )

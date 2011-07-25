@@ -542,3 +542,11 @@ def initialiseRatings():
 		rating.name = 'Emperor'
 		rating.image = '/media/images/emperor.png'
 		rating.save()
+		
+def initIdeas():
+	for i in range(100):
+		idea = new Idea()
+		idea.title = "idea "+str(i)
+		idea.content = "This is a test Idea"
+		idea.author = "jimmy"
+		idea.save()
