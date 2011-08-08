@@ -189,7 +189,7 @@ def vote(request):
 						t.start()					
 					except Exception as inst:
 						print 'exception sending email '+str(inst)
-				return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/idea/'+str(idea.id))
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
 		else:
@@ -286,7 +286,7 @@ def addcomment(request):
 						t.start()					
 					except Exception as inst:
 						print 'exception sending email '+str(inst)
-				return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/idea/'+str(idea.id))
 			except Exception as inst:
 				return HttpResponseServerError('wowza! an error occurred, sorry!</br>'+str(inst))
 		else:
