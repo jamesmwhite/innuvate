@@ -135,7 +135,7 @@
 		<!-- <h3 class="ui-widget-header ui-corner-all"> -->
 		<h3>
 		Top Existing Ideas {%if filtertag%}(tag:{{filtertag}})
-		<a href="/">clear tag</a>{%endif%}
+		<a href="/"><font color="red">clear tag</font></a>{%endif%}
 		</h3>
 		{%if ideas%}
 
@@ -240,7 +240,7 @@
 						<input type="text" name="tags" size="50%" placeholder="marketing,sales,mobile"/>
 						</br>
 						<font size="1">
-							Tag idea with comma separated list (e.g. mobile,finance,marketing)
+							Tag idea with <b>comma</b> or <b>space</b> separated list (e.g. mobile,finance,marketing)
 						</font>
 					</div>
 					<input type="submit" name="button" id="submitter" value="Submit Idea"/>

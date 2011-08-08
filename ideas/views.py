@@ -302,14 +302,32 @@ def submitidea(request):
 	if request.method == "POST":
 		post = request.POST.copy()
 		if post.has_key('tags') and post.has_key('title') and post.has_key('content'):
-			try:
+			try:	
 				content = post['content']
+				title = post['title']
 				idea = Idea()
-				idea.tags = post['tags'].strip().split(',')
+				alltag =  post['tags']
+				print 'submitting idea: '+title
+				print 'user: '+str(request.user)
+				print content
+				alltag = alltag.strip()
+				tags = None
+				if alltag.find(',') >=0:
+					tags = alltag.split(',')
+				if tags:
+					idea.tags = tags
+				else:
+					if alltag.find(' ')>=0:
+						tags = alltag.split(' ')
+						idea.tags =  tags
+					else:
+						tags = [alltag]
+						idea.tags =  tags
+				idea.title = title
 				idea.author = str(request.user)
 				print "user: "+str(request.user)
 				idea.email = str(request.user.email)
-				idea.title = post['title']
+				
 				idea.votecount = 0
 				idea.viewcount = 0
 				idea.content = content
@@ -325,9 +343,10 @@ def submitidea(request):
 						idea.save()
 					except Exception as inst:
 						print inst
+						traceback.print_exc()
 				return HttpResponseRedirect('/')
-			except:
-				return HttpResponseServerError('wowza! an error occurred, sorry!')
+			except Exception as inst:
+				return HttpResponseServerError('wowza! an error occurred, sorry!'+str(inst))
 		else:
 			error_msg = u"Insufficient POST data (need 'content' and 'title'!)"
 	return HttpResponseServerError(error_msg)
