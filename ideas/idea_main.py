@@ -35,7 +35,8 @@ def go(request):
 	 			for prating in pratings:
 	 				if person.currentRating >= prating.score:
 	 					rating = prating
-	 					break
+	 				else:
+						break
 	 	else:
 			person = Person()
 			person.email = user.email
@@ -48,7 +49,8 @@ def go(request):
 	 			for prating in pratings:
 	 				if person.currentRating >= prating.score:
 	 					rating = prating
-	 					break
+					else:
+						break
  		
  	
 	template_values = {

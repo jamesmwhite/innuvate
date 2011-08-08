@@ -20,7 +20,8 @@ def go(request):
 		 			for prating in pratings:
 		 				if person.currentRating >= prating.score:
 		 					rating = prating
-		 					break
+						else:
+							break
 	
 	template_values = {		
 		'user' : user,
