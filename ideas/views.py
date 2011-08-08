@@ -360,7 +360,23 @@ def submitarticle(request):
 			try:
 				url = post['url']
 				art = Article()
-				art.tags = post['tags'].strip().split(',')
+				alltag =  post['tags']
+				print 'submitting article: '+post['title']
+				print 'user: '+str(request.user)
+				print url
+				alltag = alltag.strip()
+				tags = None
+				if alltag.find(',') >=0:
+					tags = alltag.split(',')
+				if tags:
+					art.tags = tags
+				else:
+					if alltag.find(' ')>=0:
+						tags = alltag.split(' ')
+						art.tags =  tags
+					else:
+						tags = [alltag]
+						art.tags =  tags
 				art.author = str(request.user)
 				art.title = post['title']
 				art.votecount = 0
